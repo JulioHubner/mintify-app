@@ -1,0 +1,54 @@
+# Xcode
+.DS_Store
+build/
+DerivedData/
+*.xcuserstate
+*.xcworkspace
+!*.xcodeproj/project.xcworkspace/
+xcuserdata/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Generated files
+*.generated.swift
+
+# OS
+.DS_Store
+.Spotlight-V100
+.Trashes
+
+# XcodeGen local overrides (contains DEVELOPMENT_TEAM, etc.)
+project.local.yml
+
+# Gemini Agent (development only)
+.agent/
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.nova/
+
+# Crash logs
+*.crash
+*.ips
+
+# Code coverage
+*.gcda
+*.gcno
+*.gcov
+
+# Playground
+*.playground/
+
+# Archives
+*.xcarchive
+*.ipa
+
+# Temporary files
+*.tmp
+*.temp
+*~

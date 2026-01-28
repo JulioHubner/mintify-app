@@ -1,9 +1,0 @@
-# project.local.yml
-# This is a template for contributors to set their own DEVELOPMENT_TEAM
-# Copy this file to project.local.yml and fill in your own Team ID
-# DO NOT commit project.local.yml to git
-
-settingGroups:
-  local:
-    base:
-      DEVELOPMENT_TEAM: YOUR_TEAM_ID_HERE

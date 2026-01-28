@@ -51,10 +51,6 @@ A modern, beautiful macOS storage cleaner and system optimizer. Keep your Mac cl
 
 ## Features
 
-<table>
-<tr>
-<td>
-
 ### 🧹 Storage Cleaner
 **Intelligent junk file detection** across 6 categories:
 - User & Browser caches (Safari, Chrome, Firefox)
@@ -64,10 +60,7 @@ A modern, beautiful macOS storage cleaner and system optimizer. Keep your Mac cl
 
 *Real-time scanning progress with per-folder breakdown*
 
-</td>
-</tr>
-<tr>
-<td>
+---
 
 ### 📁 Large Files Finder
 **Customizable threshold scanning** to identify space hogs:
@@ -77,10 +70,7 @@ A modern, beautiful macOS storage cleaner and system optimizer. Keep your Mac cl
 
 *Uses `FileManager` with efficient directory enumeration*
 
-</td>
-</tr>
-<tr>
-<td>
+---
 
 ### 📋 Duplicate Finder
 **Content-based detection** using MD5 hashing:
@@ -90,10 +80,7 @@ A modern, beautiful macOS storage cleaner and system optimizer. Keep your Mac cl
 
 *Handles large files efficiently with streaming hash*
 
-</td>
-</tr>
-<tr>
-<td>
+---
 
 ### 📊 Disk Space Visualizer
 **Interactive treemap** of disk usage:
@@ -103,10 +90,7 @@ A modern, beautiful macOS storage cleaner and system optimizer. Keep your Mac cl
 
 *Uses `URLResourceKey` for accurate size calculation*
 
-</td>
-</tr>
-<tr>
-<td>
+---
 
 ### 🧠 Memory Optimizer
 **Real-time system monitoring** via Mach APIs:
@@ -116,10 +100,7 @@ A modern, beautiful macOS storage cleaner and system optimizer. Keep your Mac cl
 
 *Native `host_statistics64` for accurate metrics*
 
-</td>
-</tr>
-<tr>
-<td>
+---
 
 ### 🗑️ App Uninstaller
 **Complete removal** including leftovers:
@@ -128,10 +109,6 @@ A modern, beautiful macOS storage cleaner and system optimizer. Keep your Mac cl
 - Reveal in Finder before deletion
 
 *Scans `/Applications` and `~/Applications`*
-
-</td>
-</tr>
-</table>
 
 ### 📌 Menu Bar Integration
 Lightweight **menu bar accessory** with quick access popover:
@@ -189,8 +166,8 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    A[Scan Apps] --> B[/Applications]
-    A --> C[~/Applications]
+    A[Scan Apps] --> B["System Apps"]
+    A --> C["User Apps"]
     B & C --> D[List Installed Apps]
     D --> E{Select App}
     E --> F[Find Leftovers]

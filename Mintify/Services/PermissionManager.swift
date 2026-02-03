@@ -6,8 +6,9 @@ class PermissionManager: ObservableObject {
     static let shared = PermissionManager()
     
     @Published var hasHomeAccess: Bool = false
-    @Published var hasFullDiskAccess: Bool = false
+    @Published var hasTrashAccess: Bool = false
     @Published var homeURL: URL?
+    @Published var trashURL: URL?
     
     private let bookmarkKey = "security_scoped_bookmarks"
     
@@ -18,23 +19,16 @@ class PermissionManager: ObservableObject {
     
     func checkPermissions() {
         checkHomeAccess()
-        checkFullDiskAccess()
+        checkTrashAccess()
     }
     
     private func checkHomeAccess() {
         let home = FileManager.default.homeDirectoryForCurrentUser
         let desktop = home.appendingPathComponent("Desktop")
         let documents = home.appendingPathComponent("Documents")
-        let downloads = home.appendingPathComponent("Downloads")
-        
-        // In Sandbox with "User Selected File" entitlement, we only get access if user explicitly grants it.
-        // Even if we have access to Downloads by entitlement, we prioritize checking if we have broader access.
         
         let fileManager = FileManager.default
         
-        // Check if we can read Desktop and Documents
-        // Note: isReadableFile might return false positives/negatives in some edge cases, 
-        // but typically valid for Sandbox checks on these folders.
         let canReadDesktop = fileManager.isReadableFile(atPath: desktop.path)
         let canReadDocuments = fileManager.isReadableFile(atPath: documents.path)
         
@@ -43,18 +37,39 @@ class PermissionManager: ObservableObject {
         }
     }
     
-    private func checkFullDiskAccess() {
-        // Checking access to Trace/Trash is a common heuristic
+    private func checkTrashAccess() {
+        // Use macOS official API to access Trash
+        if let trashURL = FileManager.default.urls(for: .trashDirectory, in: .userDomainMask).first {
+            if let _ = try? FileManager.default.contentsOfDirectory(atPath: trashURL.path) {
+                DispatchQueue.main.async {
+                    self.hasTrashAccess = true
+                    self.trashURL = trashURL
+                }
+                return
+            }
+        }
+        
+        // Fallback: Check the traditional path
         let trashPath = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".Trash")
-        let isReadable = FileManager.default.isReadableFile(atPath: trashPath.path)
+        if let _ = try? FileManager.default.contentsOfDirectory(atPath: trashPath.path) {
+            DispatchQueue.main.async {
+                self.hasTrashAccess = true
+                self.trashURL = trashPath
+            }
+            return
+        }
         
         DispatchQueue.main.async {
-            self.hasFullDiskAccess = isReadable
+            self.hasTrashAccess = false
         }
     }
     
+    // MARK: - Home Access Request
+    
     func requestHomeAccess(completion: @escaping (Bool) -> Void) {
         DispatchQueue.main.async {
+            NSApp.activate(ignoringOtherApps: true)
+            
             let openPanel = NSOpenPanel()
             openPanel.message = "Mintify needs access to your Home folder to scan for duplicates and clean files."
             openPanel.prompt = "Grant Access"
@@ -62,16 +77,17 @@ class PermissionManager: ObservableObject {
             openPanel.canChooseDirectories = true
             openPanel.treatsFilePackagesAsDirectories = false
             openPanel.allowsMultipleSelection = false
-            
-            // Set directory to Home
             openPanel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
             
             openPanel.begin { response in
+                DispatchQueue.main.async {
+                    NSApp.activate(ignoringOtherApps: true)
+                    if let mainWindow = NSApp.windows.first(where: { $0.title == "Mintify" || $0.contentViewController != nil }) {
+                        mainWindow.makeKeyAndOrderFront(nil)
+                    }
+                }
+                
                 if response == .OK, let url = openPanel.url {
-                    // Check if they actually selected Home or a subfolder?
-                    // Ideally we want Home. but if they select Documents, we stick with that.
-                    // For now, assume whatever they picked is what we get access to.
-                    
                     self.saveBookmark(for: url)
                     self.checkPermissions()
                     completion(true)
@@ -82,6 +98,60 @@ class PermissionManager: ObservableObject {
         }
     }
     
+    // MARK: - Trash Access Request
+    
+    func requestTrashAccess(completion: @escaping (Bool) -> Void) {
+        DispatchQueue.main.async {
+            // First, try automatic access via macOS API
+            if let trashURL = FileManager.default.urls(for: .trashDirectory, in: .userDomainMask).first {
+                if let _ = try? FileManager.default.contentsOfDirectory(atPath: trashURL.path) {
+                    self.trashURL = trashURL
+                    self.hasTrashAccess = true
+                    completion(true)
+                    return
+                }
+            }
+            
+            // Fallback: Check traditional path
+            let trashPath = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".Trash")
+            if let _ = try? FileManager.default.contentsOfDirectory(atPath: trashPath.path) {
+                self.trashURL = trashPath
+                self.hasTrashAccess = true
+                completion(true)
+                return
+            }
+            
+            // If automatic access fails, show alert guiding to Full Disk Access
+            let alert = NSAlert()
+            alert.messageText = "Trash Access Required"
+            alert.informativeText = """
+            Mintify needs Full Disk Access to scan your Trash folder.
+            
+            How to grant access:
+            1. Click "Open Settings" below
+            2. Click the + button at the bottom of the list
+            3. Find and select Mintify.app
+            4. Click Open, then enable the toggle
+            5. Restart Mintify
+            """
+            alert.alertStyle = .informational
+            alert.addButton(withTitle: "Open Settings")
+            alert.addButton(withTitle: "Cancel")
+            
+            NSApp.activate(ignoringOtherApps: true)
+            
+            if alert.runModal() == .alertFirstButtonReturn {
+                if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles") {
+                    NSWorkspace.shared.open(url)
+                }
+            }
+            
+            completion(false)
+        }
+    }
+    
+    // MARK: - Bookmark Management
+    
     private func saveBookmark(for url: URL) {
         do {
             let bookmarkData = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
@@ -89,10 +159,7 @@ class PermissionManager: ObservableObject {
             bookmarks[url.path] = bookmarkData
             UserDefaults.standard.set(bookmarks, forKey: bookmarkKey)
             
-            // Start accessing immediately
             if url.startAccessingSecurityScopedResource() {
-                print("[PermissionManager] Started accessing: \(url.path)")
-                
                 DispatchQueue.main.async {
                     self.homeURL = url
                 }
@@ -102,7 +169,7 @@ class PermissionManager: ObservableObject {
         }
     }
     
-    func restoreBookmarks() {
+    private func restoreBookmarks() {
         guard let bookmarks = UserDefaults.standard.dictionary(forKey: bookmarkKey) as? [String: Data] else { return }
         
         for (path, bookmarkData) in bookmarks {
@@ -110,25 +177,16 @@ class PermissionManager: ObservableObject {
                 var isStale = false
                 let url = try URL(resolvingBookmarkData: bookmarkData, options: .withSecurityScope, relativeTo: nil, bookmarkDataIsStale: &isStale)
                 
-                if isStale {
-                    print("[PermissionManager] Bookmark stale for: \(path)")
-                    // Ideally check if we can regenerate it, but usually requires new permission
-                }
-                
                 if url.startAccessingSecurityScopedResource() {
-                    print("[PermissionManager] Restored access to: \(url.path)")
-                    
-                    // If this is likely the home folder, set it
+                    // Only restore home URL bookmark (trash doesn't use bookmarks)
                     if url.path.hasSuffix(NSUserName()) {
                         DispatchQueue.main.async {
                             self.homeURL = url
                         }
                     }
-                } else {
-                    print("[PermissionManager] Failed to start accessing, access revoked? \(url.path)")
                 }
             } catch {
-                print("[PermissionManager] Failed to resolve bookmark for \(path): \(error)")
+                print("[PermissionManager] Failed to restore bookmark for \(path): \(error)")
             }
         }
     }

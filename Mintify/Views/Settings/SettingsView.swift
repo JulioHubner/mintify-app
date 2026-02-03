@@ -3,6 +3,7 @@ import ServiceManagement
 
 struct SettingsView: View {
     @EnvironmentObject var appState: CleanerState
+    @EnvironmentObject var permissionManager: PermissionManager
     @State private var showTrashPermissionAlert = false
     @State private var launchAtLogin = LaunchAtLoginHelper.isEnabled
     
@@ -50,18 +51,10 @@ struct SettingsView: View {
                                         isEnabled: Binding(
                                             get: { appState.enabledCategories.contains(category) },
                                             set: { enabled in
-                                                if enabled {
-                                                    // Check permission for Trash
-                                                    if category == .trash && !PermissionHelper.hasFullDiskAccess() {
-                                                        showTrashPermissionAlert = true
-                                                    } else {
-                                                        appState.enabledCategories.insert(category)
-                                                    }
-                                                } else {
-                                                    appState.enabledCategories.remove(category)
-                                                }
+                                                handleCategoryToggle(category: category, enabled: enabled)
                                             }
-                                        )
+                                        ),
+                                        needsPermission: category == .trash && !permissionManager.hasTrashAccess
                                     )
                                     
                                     if category != CleanCategory.allCases.last {
@@ -167,55 +160,7 @@ struct SettingsView: View {
                                     .fill(AppTheme.cardBackground)
                             )
                         }
-                        
-                        // Full Disk Access Info
-                        if !PermissionHelper.hasFullDiskAccess() {
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text("Permissions")
-                                    .font(.headline)
-                                    .foregroundColor(AppTheme.textPrimary)
-                                
-                                HStack(spacing: 12) {
-                                    Image(systemName: "lock.shield")
-                                        .foregroundColor(Color(hex: "FF9F1C"))
-                                        .font(.title2)
-                                    
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text("Full Disk Access")
-                                            .font(.system(size: 14, weight: .semibold))
-                                            .foregroundColor(AppTheme.textPrimary)
-                                        
-                                        Text("Required to scan Trash folder")
-                                            .font(.caption)
-                                            .foregroundColor(AppTheme.textSecondary)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Button(action: { PermissionHelper.openFullDiskAccessSettings() }) {
-                                        Text("Grant Access")
-                                            .font(.system(size: 12, weight: .medium))
-                                            .foregroundColor(.white)
-                                            .padding(.horizontal, 14)
-                                            .padding(.vertical, 8)
-                                            .background(
-                                                Capsule()
-                                                    .fill(Color(hex: "FF9F1C").opacity(0.8))
-                                            )
-                                    }
-                                    .buttonStyle(.plain)
-                                }
-                                .padding(16)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color(hex: "FF9F1C").opacity(0.1))
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 12)
-                                                .stroke(Color(hex: "FF9F1C").opacity(0.3), lineWidth: 1)
-                                        )
-                                )
-                            }
-                        }
+
                     }
                     .padding(24)
                 }
@@ -233,10 +178,27 @@ struct SettingsView: View {
         }
     }
     
-    // ... helper methods (selectAll, deselectAll, resetToDefault) unchanged ...
+    private func handleCategoryToggle(category: CleanCategory, enabled: Bool) {
+        if enabled {
+            // Check if Trash needs permission
+            if category == .trash && !permissionManager.hasTrashAccess {
+                // Request trash access
+                permissionManager.requestTrashAccess { success in
+                    if success {
+                        appState.enabledCategories.insert(category)
+                    }
+                }
+            } else {
+                appState.enabledCategories.insert(category)
+            }
+        } else {
+            appState.enabledCategories.remove(category)
+        }
+    }
+    
     private func selectAll() {
         for category in CleanCategory.allCases {
-            if category == .trash && !PermissionHelper.hasFullDiskAccess() {
+            if category == .trash && !permissionManager.hasTrashAccess {
                 continue // Skip trash if no permission
             }
             appState.enabledCategories.insert(category)
@@ -255,6 +217,7 @@ struct SettingsView: View {
 struct CategoryToggleRow: View {
     let category: CleanCategory
     @Binding var isEnabled: Bool
+    var needsPermission: Bool = false
     
     private var categoryColor: Color {
         switch category.color {
@@ -283,12 +246,12 @@ struct CategoryToggleRow: View {
             
             // Info
             VStack(alignment: .leading, spacing: 2) {
-                HStack(spacing: 8) {
+                HStack(spacing: 6) {
                     Text(category.rawValue)
                         .font(.system(size: 14, weight: .medium))
                         .foregroundColor(AppTheme.textPrimary)
                     
-                    if category == .trash && !PermissionHelper.hasFullDiskAccess() {
+                    if needsPermission {
                         Image(systemName: "lock.fill")
                             .font(.system(size: 10))
                             .foregroundColor(Color(hex: "FF9F1C"))
@@ -315,4 +278,5 @@ struct CategoryToggleRow: View {
 #Preview {
     SettingsView()
         .environmentObject(CleanerState())
+        .environmentObject(PermissionManager.shared)
 }

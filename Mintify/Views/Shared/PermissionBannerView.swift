@@ -15,7 +15,7 @@ struct PermissionBannerView: View {
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundColor(.white)
                 
-                Text("Grant permission to scan Trash folder")
+                Text("Click + to add Mintify, then enable it to scan Trash")
                     .font(.system(size: 11))
                     .foregroundColor(.white.opacity(0.6))
             }
@@ -59,10 +59,24 @@ struct PermissionBannerView: View {
 // Helper to check and open Full Disk Access
 struct PermissionHelper {
     
-    /// Check if app has Full Disk Access by trying to read .Trash
+    /// Check if app has Full Disk Access by trying to list .Trash contents
+    /// Note: isReadableFile() is unreliable in Sandbox, use contentsOfDirectory instead
     static func hasFullDiskAccess() -> Bool {
-        let trashPath = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".Trash")
-        return FileManager.default.isReadableFile(atPath: trashPath.path)
+        let fileManager = FileManager.default
+        
+        // Test 1: .Trash
+        let trashPath = fileManager.homeDirectoryForCurrentUser.appendingPathComponent(".Trash")
+        if let _ = try? fileManager.contentsOfDirectory(atPath: trashPath.path) {
+            return true
+        }
+        
+        // Test 2: Library/Safari (FDA protected)
+        let safariPath = fileManager.homeDirectoryForCurrentUser.appendingPathComponent("Library/Safari")
+        if let _ = try? fileManager.contentsOfDirectory(atPath: safariPath.path) {
+            return true
+        }
+        
+        return false
     }
     
     /// Open System Settings to Full Disk Access pane
@@ -85,11 +99,14 @@ struct PermissionHelper {
             alert.informativeText = """
             Mintify needs Full Disk Access to scan your Trash folder.
             
-            To grant access:
-            1. Click "Open Settings"
-            2. Find Mintify in the list (or click + to add it)
-            3. Enable the toggle
-            4. Restart Mintify
+            How to grant access:
+            1. Click "Open Settings" below
+            2. Click the + button at the bottom of the list
+            3. Navigate to Applications and find Mintify.app
+               (or press Cmd+Shift+G and paste the app path)
+            4. Select Mintify.app and click Open
+            5. Enable the toggle next to Mintify
+            6. Restart Mintify for changes to take effect
             """
             alert.alertStyle = .informational
             alert.addButton(withTitle: "Open Settings")

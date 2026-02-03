@@ -229,6 +229,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let settingsView = SettingsView()
             .environmentObject(appState)
+            .environmentObject(PermissionManager.shared)
         
         let hostingController = NSHostingController(rootView: settingsView)
         

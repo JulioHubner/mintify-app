@@ -376,6 +376,9 @@ struct DiskVisualizerView: View {
     // MARK: - Helper Functions
     
     private func requestPermissionAndScan() {
+        // Activate app first to prevent window from hiding
+        NSApp.activate(ignoringOtherApps: true)
+        
         // Use NSOpenPanel to request folder access
         let panel = NSOpenPanel()
         panel.canChooseDirectories = true
@@ -390,8 +393,18 @@ struct DiskVisualizerView: View {
         }
         
         panel.begin { response in
+            // Re-activate app after panel closes to restore window focus
+            DispatchQueue.main.async {
+                NSApp.activate(ignoringOtherApps: true)
+                
+                // Bring main window back to front
+                if let mainWindow = NSApp.windows.first(where: { $0.title == "Mintify" || $0.contentViewController != nil }) {
+                    mainWindow.makeKeyAndOrderFront(nil)
+                }
+            }
+            
             // Start scan regardless (we'll show what we can access)
-            startScan()
+            self.startScan()
         }
     }
     

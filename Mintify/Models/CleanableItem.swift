@@ -1,12 +1,12 @@
 import Foundation
 
 enum CleanCategory: String, CaseIterable {
-    case userCaches = "User Caches"
-    case browserCaches = "Browser Caches"
-    case logs = "Logs"
-    case xcode = "Xcode"
-    case developerTools = "Developer Tools"
-    case trash = "Trash"
+    case userCaches = "userCaches"
+    case browserCaches = "browserCaches"
+    case logs = "logs"
+    case xcode = "xcode"
+    case developerTools = "developerTools"
+    case trash = "trash"
     
     var icon: String {
         switch self {
@@ -19,15 +19,14 @@ enum CleanCategory: String, CaseIterable {
         }
     }
     
-    var description: String {
-        switch self {
-        case .userCaches: return "Application caches"
-        case .browserCaches: return "Safari, Chrome, Firefox caches"
-        case .logs: return "Application logs"
-        case .xcode: return "DerivedData & Device Support"
-        case .developerTools: return "NPM, Yarn, Gradle, CocoaPods"
-        case .trash: return "Items in Trash"
-        }
+    /// Localized display name
+    var localizedName: String {
+        return "category.\(rawValue)".localized
+    }
+    
+    /// Localized description
+    var localizedDescription: String {
+        return "category.\(rawValue)Desc".localized
     }
     
     var color: String {

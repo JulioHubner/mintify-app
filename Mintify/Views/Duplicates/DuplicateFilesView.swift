@@ -104,7 +104,7 @@ struct DuplicateFilesView: View {
         .overlay {
             if isDeleting {
                 DeleteProgressOverlay(
-                    message: "Deleting files...",
+                    message: "duplicates.deleting".localized,
                     current: deleteProgress.current,
                     total: deleteProgress.total
                 )
@@ -120,7 +120,7 @@ struct DuplicateFilesView: View {
                 .foregroundStyle(AppTheme.cleanCyan)
                 .font(.title2)
             
-            Text("Duplicate Finder")
+            Text("duplicates.title".localized)
                 .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundColor(AppTheme.textPrimary)
             
@@ -131,7 +131,7 @@ struct DuplicateFilesView: View {
                 ForEach(DuplicateSortOption.allCases) { option in
                     Button(action: { state.sortOption = option }) {
                         HStack {
-                            Text(option.rawValue)
+                            Text(option.localizedName)
                             if state.sortOption == option {
                                 Image(systemName: "checkmark")
                             }
@@ -140,9 +140,9 @@ struct DuplicateFilesView: View {
                 }
             } label: {
                 HStack(spacing: 4) {
-                    Text("Sort:")
+                    Text("duplicates.sort".localized)
                         .foregroundColor(AppTheme.textSecondary)
-                    Text(state.sortOption.rawValue)
+                    Text(state.sortOption.localizedName)
                         .foregroundColor(AppTheme.textPrimary)
                     Image(systemName: "chevron.down")
                         .font(.system(size: 10))
@@ -159,7 +159,7 @@ struct DuplicateFilesView: View {
             .buttonStyle(.plain)
             
             // Group count
-            Text("\(filteredGroups.count) groups")
+            Text("duplicates.groupCount".localized(String(filteredGroups.count)))
                 .font(.system(size: 12))
                 .foregroundColor(AppTheme.textSecondary)
             
@@ -168,7 +168,7 @@ struct DuplicateFilesView: View {
                 Button(action: startScan) {
                     HStack(spacing: 6) {
                         Image(systemName: "arrow.clockwise")
-                        Text("Scan")
+                        Text("duplicates.scan".localized)
                     }
                     .font(.system(size: 13, weight: .medium))
                     .foregroundColor(AppTheme.textPrimary)
@@ -231,7 +231,7 @@ struct DuplicateFilesView: View {
                 Button(action: stopScan) {
                     HStack(spacing: 4) {
                         Image(systemName: "stop.fill")
-                        Text("Stop")
+                        Text("duplicates.stop".localized)
                     }
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(AppTheme.textPrimary)
@@ -254,7 +254,7 @@ struct DuplicateFilesView: View {
     
     private var filterSidebar: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("File Type")
+            Text("duplicates.fileType".localized)
                 .font(.system(size: 11, weight: .medium))
                 .foregroundColor(AppTheme.textSecondary)
                 .textCase(.uppercase)
@@ -291,18 +291,18 @@ struct DuplicateFilesView: View {
                 .font(.system(size: 48))
                 .foregroundColor(AppTheme.textSecondary)
             
-            Text("Find Duplicate Files")
-                .font(.headline)
-                .foregroundColor(AppTheme.textSecondary)
+            Text("duplicates.findDuplicates".localized)
+                .font(.system(size: 24, weight: .bold))
+                .foregroundColor(AppTheme.textPrimary)
             
-            Text("Click Scan to search for duplicate files")
-                .font(.caption)
+            Text("duplicates.clickToScan".localized)
+                .font(.system(size: 14))
                 .foregroundColor(AppTheme.textSecondary)
             
             Button(action: startScan) {
                 HStack {
                     Image(systemName: "magnifyingglass")
-                    Text("Scan Now")
+                    Text("duplicates.scanNow".localized)
                 }
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(AppTheme.textPrimary)
@@ -319,7 +319,7 @@ struct DuplicateFilesView: View {
             
             VStack(spacing: 8) {
                 if !permissionManager.hasHomeAccess {
-                    Text("Mintify needs access to your Home folder to find duplicates.")
+                    Text("duplicates.needsAccess".localized)
                         .font(.caption2)
                         .foregroundColor(AppTheme.textSecondary)
                         .multilineTextAlignment(.center)
@@ -340,7 +340,7 @@ struct DuplicateFilesView: View {
                                     .controlSize(.small)
                                     .scaleEffect(0.7)
                             }
-                            Text("Grant Access")
+                            Text("duplicates.grantAccess".localized)
                         }
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(AppTheme.textPrimary)
@@ -354,7 +354,7 @@ struct DuplicateFilesView: View {
                     .buttonStyle(.plain)
                     .padding(.top, 4)
                 } else {
-                     Text("Access to Home folder granted")
+                     Text("duplicates.accessGranted".localized)
                         .font(.caption2)
                         .foregroundColor(.green.opacity(0.7))
                         
@@ -416,7 +416,7 @@ struct DuplicateFilesView: View {
                 HStack(spacing: 6) {
                     Image(systemName: "checkmark.circle")
                         .foregroundColor(.mint)
-                    Text("Auto-select Duplicates")
+                    Text("duplicates.autoSelect".localized)
                         .foregroundColor(AppTheme.textSecondary)
                 }
                 .font(.system(size: 12))
@@ -448,7 +448,7 @@ struct DuplicateFilesView: View {
             Button(action: { showConfirmDelete = true }) {
                 HStack(spacing: 6) {
                     Image(systemName: "trash")
-                    Text("Remove Selected")
+                    Text("duplicates.removeSelected".localized)
                 }
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(AppTheme.textPrimary)
@@ -464,19 +464,81 @@ struct DuplicateFilesView: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 12)
-        .alert("Remove \(selectedCount) duplicates?", isPresented: $showConfirmDelete) {
-            Button("Cancel", role: .cancel) { }
-            Button("Remove", role: .destructive) {
+        .alert("duplicates.removeConfirm".localized(String(selectedCount)), isPresented: $showConfirmDelete) {
+            Button("alert.cancel".localized, role: .cancel) { }
+            Button("alert.remove".localized, role: .destructive) {
                 deleteSelected()
             }
         } message: {
-            Text("This will move \(formattedSelectedSize) of duplicate files to Trash. Original files will be kept.")
+            Text("duplicates.removeMessage".localized(formattedSelectedSize))
         }
     }
     
     // MARK: - Actions
     
     private func startScan() {
+        // Check permission first, if not granted, request it
+        if !permissionManager.hasHomeAccess {
+            requestPermissionAndScan()
+            return
+        }
+        
+        performScan()
+    }
+    
+    private func requestPermissionAndScan() {
+        // Store reference to the main window BEFORE showing panel
+        let mainWindow = NSApp.keyWindow ?? NSApp.windows.first(where: { $0.isVisible && $0.canBecomeKey })
+        
+        // Activate app first to prevent window from hiding
+        NSApp.activate(ignoringOtherApps: true)
+        
+        // Use NSOpenPanel to request folder access (like DiskVisualizerView)
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.allowsMultipleSelection = false
+        panel.message = "duplicates.selectHomeFolder".localized
+        panel.prompt = "welcome.grantAccess".localized
+        
+        // Try to start at home directory
+        panel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
+        
+        isRequestingPermission = true
+        
+        // Use beginSheetModal if we have a window, otherwise use begin
+        if let window = mainWindow {
+            panel.beginSheetModal(for: window) { [self] response in
+                isRequestingPermission = false
+                if response == .OK, let url = panel.url {
+                    // Save bookmark for future use
+                    permissionManager.saveHomeBookmark(for: url)
+                }
+                // Start scan regardless (we'll show what we can access)
+                performScan()
+            }
+        } else {
+            panel.begin { [self] response in
+                // Re-activate app after panel closes to restore window focus
+                DispatchQueue.main.async {
+                    NSApp.activate(ignoringOtherApps: true)
+                    if let window = mainWindow {
+                        window.makeKeyAndOrderFront(nil)
+                    }
+                }
+                
+                isRequestingPermission = false
+                if response == .OK, let url = panel.url {
+                    // Save bookmark for future use
+                    permissionManager.saveHomeBookmark(for: url)
+                }
+                // Start scan regardless
+                performScan()
+            }
+        }
+    }
+    
+    private func performScan() {
         state.isScanning = true
         state.scanProgress = 0
         state.scanStatus = "Initializing..."
@@ -501,6 +563,19 @@ struct DuplicateFilesView: View {
                 }
                 state.isScanning = false
                 state.scanStatus = ""
+                
+                // Restore window focus after scan (TCC dialogs may have hidden the window)
+                self.restoreWindowFocus()
+            }
+        }
+    }
+    
+    /// Restore window focus after TCC permission dialogs may have hidden it
+    private func restoreWindowFocus() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            NSApp.activate(ignoringOtherApps: true)
+            if let window = NSApp.windows.first(where: { $0.isVisible && $0.canBecomeKey }) {
+                window.makeKeyAndOrderFront(nil)
             }
         }
     }
@@ -580,7 +655,7 @@ struct FilterButton: View {
                     .font(.system(size: 12))
                     .frame(width: 16)
                 
-                Text(category.rawValue)
+                Text(category.localizedName)
                     .font(.system(size: 12))
                     .lineLimit(1)
                     .fixedSize(horizontal: true, vertical: false)

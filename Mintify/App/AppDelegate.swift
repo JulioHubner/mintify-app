@@ -21,6 +21,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         AppDelegate.shared = self
+        
+        // Initialize LocalizationManager early to set language before any views are created
+        _ = LocalizationManager.shared
+        
         // Start as accessory (menu bar only, no dock icon)
         NSApp.setActivationPolicy(.accessory)
         setupMenuBar()
@@ -148,7 +152,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Keep the window anchored at the top (expand downward)
         let currentFrame = window.frame
-        let newY = overlayWindowTopY - currentFrame.height
+        var newY = overlayWindowTopY - currentFrame.height
+        
+        // Ensure window doesn't go below screen bottom (macOS 26 fix)
+        if let screen = window.screen ?? NSScreen.main {
+            let minY = screen.frame.minY + 10 // 10pt padding from bottom
+            if newY < minY {
+                newY = minY
+            }
+        }
         
         if abs(currentFrame.origin.y - newY) > 1 {
             // Set frame atomically to avoid jitter

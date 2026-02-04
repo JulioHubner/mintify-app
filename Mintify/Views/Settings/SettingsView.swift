@@ -3,16 +3,22 @@ import ServiceManagement
 
 // MARK: - Settings Tabs
 enum SettingsTab: String, CaseIterable {
-    case general = "General"
-    case appearance = "Appearance"
-    case permissions = "Permissions"
+    case general = "general"
+    case appearance = "appearance"
+    case permissions = "permissions"
+    case language = "language"
     
     var icon: String {
         switch self {
         case .general: return "gearshape.fill"
         case .appearance: return "paintbrush.fill"
         case .permissions: return "lock.shield.fill"
+        case .language: return "globe"
         }
+    }
+    
+    var localizedName: String {
+        return "settings.\(rawValue)".localized
     }
 }
 
@@ -20,6 +26,7 @@ struct SettingsView: View {
     @EnvironmentObject var appState: CleanerState
     @EnvironmentObject var permissionManager: PermissionManager
     @ObservedObject var themeManager = ThemeManager.shared
+    @ObservedObject var localizationManager = LocalizationManager.shared
     @State private var selectedTab: SettingsTab = .general
     @State private var launchAtLogin = LaunchAtLoginHelper.isEnabled
     
@@ -51,7 +58,7 @@ struct SettingsView: View {
                     .foregroundStyle(AppTheme.mintifyGradient)
                     .font(.title2)
                 
-                Text("Settings")
+                Text("settings.title".localized)
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .foregroundColor(AppTheme.textPrimary)
             }
@@ -83,7 +90,7 @@ struct SettingsView: View {
                 Text("Mintify")
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(AppTheme.textSecondary)
-                Text("Version 1.0.0")
+                Text("about.version".localized("1.0.0"))
                     .font(.system(size: 10))
                     .foregroundColor(AppTheme.textSecondary.opacity(0.6))
             }
@@ -105,6 +112,8 @@ struct SettingsView: View {
                     appearanceSection
                 case .permissions:
                     permissionsSection
+                case .language:
+                    languageSection
                 }
             }
             .padding(28)
@@ -116,16 +125,16 @@ struct SettingsView: View {
     private var generalSection: some View {
         VStack(alignment: .leading, spacing: 24) {
             // Startup Section
-            sectionHeader(title: "Startup", subtitle: nil)
+            sectionHeader(title: "settings.launchAtLogin".localized, subtitle: nil)
             
             HStack(spacing: 14) {
                 iconBox(icon: "power.circle", color: AppTheme.cleanCyan)
                 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Launch at Login")
+                    Text("settings.launchAtLogin".localized)
                         .font(.system(size: 14, weight: .medium))
                         .foregroundColor(AppTheme.textPrimary)
-                    Text("Start Mintify automatically when you log in")
+                    Text("settings.launchAtLoginDesc".localized)
                         .font(.system(size: 12))
                         .foregroundColor(AppTheme.textSecondary)
                 }
@@ -145,7 +154,7 @@ struct SettingsView: View {
             Divider().background(AppTheme.cardBorder).padding(.vertical, 8)
             
             // Scan Categories Section
-            sectionHeader(title: "Scan Categories", subtitle: "Choose which folders to include in the scan")
+            sectionHeader(title: "settings.scanCategories".localized, subtitle: "settings.scanCategoriesDesc".localized)
             
             // Categories List
             VStack(spacing: 0) {
@@ -168,9 +177,9 @@ struct SettingsView: View {
             
             // Quick Actions
             HStack(spacing: 10) {
-                quickActionButton(title: "Select All", color: AppTheme.cleanCyan) { selectAll() }
-                quickActionButton(title: "Deselect All", color: AppTheme.cardBackground) { deselectAll() }
-                quickActionButton(title: "Reset", color: AppTheme.cardBackground) { resetToDefault() }
+                quickActionButton(title: "settings.selectAll".localized, color: AppTheme.cleanCyan) { selectAll() }
+                quickActionButton(title: "settings.deselectAll".localized, color: AppTheme.cardBackground) { deselectAll() }
+                quickActionButton(title: "settings.reset".localized, color: AppTheme.cardBackground) { resetToDefault() }
             }
         }
     }
@@ -178,7 +187,7 @@ struct SettingsView: View {
     // MARK: - Appearance Section
     private var appearanceSection: some View {
         VStack(alignment: .leading, spacing: 24) {
-            sectionHeader(title: "Theme", subtitle: "Choose your preferred appearance")
+            sectionHeader(title: "settings.theme".localized, subtitle: "settings.themeDesc".localized)
             
             LazyVGrid(columns: [
                 GridItem(.flexible(), spacing: 14),
@@ -203,12 +212,12 @@ struct SettingsView: View {
     // MARK: - Permissions Section
     private var permissionsSection: some View {
         VStack(alignment: .leading, spacing: 24) {
-            sectionHeader(title: "Access Status", subtitle: "Mintify needs certain permissions to function properly")
+            sectionHeader(title: "permission.accessStatus".localized, subtitle: "permission.accessDesc".localized)
             
             VStack(spacing: 12) {
                 permissionRow(
-                    title: "Home Folder Access",
-                    description: "Required for scanning files",
+                    title: "permission.homeFolder".localized,
+                    description: "permission.homeFolderDesc".localized,
                     hasAccess: permissionManager.hasHomeAccess,
                     action: {
                         permissionManager.requestHomeAccess { _ in }
@@ -216,8 +225,8 @@ struct SettingsView: View {
                 )
                 
                 permissionRow(
-                    title: "Trash Access",
-                    description: "Required for scanning Trash folder",
+                    title: "permission.trash".localized,
+                    description: "permission.trashDesc".localized,
                     hasAccess: permissionManager.hasTrashAccess,
                     action: {
                         permissionManager.requestTrashAccess { _ in }
@@ -231,7 +240,47 @@ struct SettingsView: View {
                     .foregroundColor(AppTheme.cleanCyan)
                     .font(.system(size: 16))
                 
-                Text("If permissions don't work, try granting Full Disk Access in System Settings → Privacy & Security.")
+                Text("permission.info".localized)
+                    .font(.system(size: 12))
+                    .foregroundColor(AppTheme.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(14)
+            .background(RoundedRectangle(cornerRadius: 10).fill(AppTheme.cleanCyan.opacity(0.1)))
+        }
+    }
+    
+    // MARK: - Language Section
+    private var languageSection: some View {
+        VStack(alignment: .leading, spacing: 24) {
+            sectionHeader(title: "settings.chooseLanguage".localized, subtitle: "settings.chooseLanguageDesc".localized)
+            
+            VStack(spacing: 0) {
+                ForEach(AppLanguage.allCases) { language in
+                    LanguageRow(
+                        language: language,
+                        isSelected: localizationManager.currentLanguage == language,
+                        action: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                localizationManager.setLanguage(language)
+                            }
+                        }
+                    )
+                    
+                    if language != AppLanguage.allCases.last {
+                        Divider().background(AppTheme.overlayMedium)
+                    }
+                }
+            }
+            .background(RoundedRectangle(cornerRadius: 12).fill(AppTheme.cardBackground))
+            
+            // Note about restart
+            HStack(spacing: 12) {
+                Image(systemName: "info.circle.fill")
+                    .foregroundColor(AppTheme.cleanCyan)
+                    .font(.system(size: 16))
+                
+                Text("settings.restartNote".localized)
                     .font(.system(size: 12))
                     .foregroundColor(AppTheme.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -294,12 +343,12 @@ struct SettingsView: View {
             Spacer()
             
             if hasAccess {
-                Text("Granted")
+                Text("permission.granted".localized)
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(.green)
             } else {
                 Button(action: action) {
-                    Text("Grant")
+                    Text("permission.grant".localized)
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(AppTheme.textPrimary)
                         .padding(.horizontal, 14)
@@ -354,7 +403,7 @@ struct SettingsSidebarButton: View {
                 Image(systemName: tab.icon)
                     .font(.system(size: 14))
                     .frame(width: 20)
-                Text(tab.rawValue)
+                Text(tab.localizedName)
                     .font(.system(size: 13, weight: .medium))
                 Spacer()
             }
@@ -403,7 +452,7 @@ struct CategoryToggleRow: View {
             
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 6) {
-                    Text(category.rawValue)
+                    Text(category.localizedName)
                         .font(.system(size: 13, weight: .medium))
                         .foregroundColor(AppTheme.textPrimary)
                     if needsPermission {
@@ -412,7 +461,7 @@ struct CategoryToggleRow: View {
                             .foregroundColor(Color(hex: "FF9F1C"))
                     }
                 }
-                Text(category.description)
+                Text(category.localizedDescription)
                     .font(.system(size: 11))
                     .foregroundColor(AppTheme.textSecondary)
             }
@@ -464,6 +513,47 @@ struct ThemeSelectionCard: View {
                     .stroke(isSelected ? AppTheme.cleanCyan : AppTheme.cardBorder, lineWidth: isSelected ? 2 : 1)
             )
             .scaleEffect(isSelected ? 1.02 : 1.0)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Language Row
+struct LanguageRow: View {
+    let language: AppLanguage
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 14) {
+                // Flag
+                Text(language.flag)
+                    .font(.system(size: 24))
+                
+                // Language name
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(language.displayName)
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(AppTheme.textPrimary)
+                }
+                
+                Spacer()
+                
+                // Selection indicator
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 18))
+                        .foregroundColor(AppTheme.cleanCyan)
+                } else {
+                    Image(systemName: "circle")
+                        .font(.system(size: 18))
+                        .foregroundColor(AppTheme.textSecondary.opacity(0.5))
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

@@ -43,7 +43,7 @@ struct AboutView: View {
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
                         Image(systemName: "person.fill")
-                            .foregroundColor(AppTheme.cleanCyan)
+                            .foregroundColor(AppTheme.textPrimary)
                             .frame(width: 20)
                         Text("Yellow Studio Labs")
                             .font(.system(size: 13, weight: .medium))
@@ -52,20 +52,20 @@ struct AboutView: View {
                     
                     HStack(spacing: 8) {
                         Image(systemName: "envelope.fill")
-                            .foregroundColor(AppTheme.cleanCyan)
+                            .foregroundColor(AppTheme.textPrimary)
                             .frame(width: 20)
                         Link("yellowstudio.vn@gmail.com", destination: URL(string: "mailto:yellowstudio.vn@gmail.com")!)
                             .font(.system(size: 13))
-                            .foregroundColor(AppTheme.textSecondary)
+                            .foregroundColor(AppTheme.textPrimary)
                     }
                     
                     HStack(spacing: 8) {
                         Image(systemName: "globe")
-                            .foregroundColor(AppTheme.cleanCyan)
+                            .foregroundColor(AppTheme.textPrimary)
                             .frame(width: 20)
                         Link("GitHub Repository", destination: URL(string: "https://github.com/yellowstudio-labs/mintify-app")!)
                             .font(.system(size: 13))
-                            .foregroundColor(AppTheme.cleanCyan)
+                            .foregroundColor(AppTheme.textPrimary)
                     }
                 }
                 .padding(.vertical, 8)

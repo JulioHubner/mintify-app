@@ -50,7 +50,7 @@ struct CategoryCardView: View {
                 
                 // Category info
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(category.category.rawValue)
+                    Text(category.category.localizedName)
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundColor(AppTheme.textPrimary)
                     
@@ -66,7 +66,7 @@ struct CategoryCardView: View {
                                     .fill(categoryColor.opacity(0.2))
                             )
                         
-                        Text(category.category.description)
+                        Text(category.category.localizedDescription)
                             .font(.caption)
                             .foregroundColor(AppTheme.textSecondary.opacity(0.7))
                             .lineLimit(1)

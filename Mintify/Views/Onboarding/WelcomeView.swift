@@ -6,23 +6,25 @@ struct WelcomeView: View {
     @State private var currentStep = 0
     @State private var isRequestingAccess = false
     
-    private let features = [
-        WelcomeFeature(
-            icon: "sparkles",
-            title: "Storage Cleaner",
-            description: "Scan and remove junk files, caches, and temporary data to free up disk space."
-        ),
-        WelcomeFeature(
-            icon: "doc.on.doc",
-            title: "Duplicate Finder",
-            description: "Find and remove duplicate files taking up valuable storage."
-        ),
-        WelcomeFeature(
-            icon: "memorychip",
-            title: "System Monitor",
-            description: "Monitor CPU, memory, and disk usage in real-time from the menu bar."
-        )
-    ]
+    private var features: [WelcomeFeature] {
+        [
+            WelcomeFeature(
+                icon: "sparkles",
+                title: "welcome.storageCleaner".localized,
+                description: "welcome.storageCleanerDesc".localized
+            ),
+            WelcomeFeature(
+                icon: "doc.on.doc",
+                title: "welcome.duplicateFinder".localized,
+                description: "welcome.duplicateFinderDesc".localized
+            ),
+            WelcomeFeature(
+                icon: "memorychip",
+                title: "welcome.systemMonitor".localized,
+                description: "welcome.systemMonitorDesc".localized
+            )
+        ]
+    }
     
     var body: some View {
         ZStack {
@@ -66,11 +68,11 @@ struct WelcomeView: View {
             }
             
             VStack(spacing: 6) {
-                Text("Welcome to Mintify")
+                Text("welcome.title".localized)
                     .font(.system(size: 26, weight: .bold, design: .rounded))
                     .foregroundColor(AppTheme.textPrimary)
                 
-                Text(currentStep == 0 ? "Keep your Mac clean and fast" : "One more step to get started")
+                Text(currentStep == 0 ? "welcome.subtitle".localized : "welcome.oneMoreStep".localized)
                     .font(.system(size: 14))
                     .foregroundColor(AppTheme.textSecondary)
             }
@@ -135,13 +137,13 @@ struct WelcomeView: View {
                 }
                 
                 VStack(spacing: 8) {
-                    Text(permissionManager.hasHomeAccess ? "Access Granted!" : "Folder Access Required")
+                    Text(permissionManager.hasHomeAccess ? "welcome.accessGranted".localized : "welcome.folderAccess".localized)
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(AppTheme.textPrimary)
                     
                     Text(permissionManager.hasHomeAccess
-                         ? "You're all set! Mintify can now scan your files."
-                         : "Mintify needs access to your Home folder to scan for junk files, duplicates, and more.")
+                         ? "welcome.accessGrantedDesc".localized
+                         : "welcome.folderAccessDesc".localized)
                         .font(.system(size: 14))
                         .foregroundColor(AppTheme.textSecondary)
                         .multilineTextAlignment(.center)
@@ -158,7 +160,7 @@ struct WelcomeView: View {
                             } else {
                                 Image(systemName: "folder.badge.plus")
                             }
-                            Text("Grant Access")
+                            Text("welcome.grantAccess".localized)
                         }
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(AppTheme.textPrimary)
@@ -194,7 +196,7 @@ struct WelcomeView: View {
                         .foregroundColor(AppTheme.cleanCyan)
                         .font(.system(size: 14))
                     
-                    Text("A file picker will open. Select your Home folder and click Grant Access.")
+                    Text("welcome.filePickerInfo".localized)
                         .font(.system(size: 12))
                         .foregroundColor(AppTheme.textSecondary)
                 }
@@ -220,7 +222,7 @@ struct WelcomeView: View {
             if currentStep == 0 {
                 Button(action: { withAnimation { currentStep = 1 } }) {
                     HStack(spacing: 6) {
-                        Text("Continue")
+                        Text("welcome.continue".localized)
                         Image(systemName: "arrow.right")
                     }
                     .font(.system(size: 14, weight: .semibold))
@@ -234,7 +236,7 @@ struct WelcomeView: View {
                 HStack(spacing: 12) {
                     if !permissionManager.hasHomeAccess {
                         Button(action: skipAndClose) {
-                            Text("Skip for Now")
+                            Text("welcome.skipForNow".localized)
                                 .font(.system(size: 13, weight: .medium))
                                 .foregroundColor(AppTheme.textSecondary)
                         }
@@ -242,7 +244,7 @@ struct WelcomeView: View {
                     }
                     
                     Button(action: completeOnboarding) {
-                        Text(permissionManager.hasHomeAccess ? "Get Started" : "Done")
+                        Text(permissionManager.hasHomeAccess ? "welcome.getStarted".localized : "welcome.done".localized)
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundColor(AppTheme.textPrimary)
                             .padding(.horizontal, 24)

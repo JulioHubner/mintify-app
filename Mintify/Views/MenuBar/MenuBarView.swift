@@ -18,6 +18,24 @@ struct MenuBarView: View {
     private let statsHelper = SystemStatsHelper.shared
     private let refreshTimer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
     
+    // Calculate max height based on screen, leaving room for menu bar and padding
+    // On macOS 26, visibleFrame behavior may differ, so we use a safer calculation
+    private var maxDetailHeight: CGFloat {
+        // Try to get screen from the current view's window, fallback to main screen
+        let screen = NSApp.keyWindow?.screen ?? NSScreen.main ?? NSScreen.screens.first
+        
+        if let screen = screen {
+            // Menu bar is typically about 24-30pt high, add extra padding for safety
+            let menuBarHeight: CGFloat = 40
+            let bottomPadding: CGFloat = 20
+            let availableHeight = screen.frame.height - menuBarHeight - bottomPadding
+            
+            // Clamp between 400 and 550 to prevent layout issues on macOS 26
+            return min(550, max(400, availableHeight))
+        }
+        return 500 // Conservative fallback
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             MenuBarHeaderView()
@@ -33,7 +51,7 @@ struct MenuBarView: View {
             Divider()
                 .opacity(0.1)
                 .padding(.horizontal, 16)
-                .padding(.bottom, 8)
+                .padding(.bottom, selectedDetail != .none ? 4 : 8)
             
             centralContent
             
@@ -49,8 +67,9 @@ struct MenuBarView: View {
             RoundedRectangle(cornerRadius: 16)
                 .stroke(AppTheme.cardBorder, lineWidth: 1)
         )
-        .frame(width: 320, height: selectedDetail != .none ? 600 : nil)
-        .fixedSize(horizontal: false, vertical: selectedDetail == .none)
+        .frame(width: 320)
+        .frame(height: selectedDetail != .none ? maxDetailHeight : nil)
+        .fixedSize(horizontal: true, vertical: selectedDetail == .none)
         .transaction { transaction in
             transaction.animation = nil
         }
@@ -119,6 +138,7 @@ struct MenuBarView: View {
             if selectedDetail != .none {
                 detailView
                     .transition(.opacity)
+                    .frame(maxHeight: .infinity)
             } else {
                 MenuBarDefaultContentView(
                     appState: appState,
@@ -128,7 +148,6 @@ struct MenuBarView: View {
                 )
             }
         }
-        .frame(maxHeight: .infinity)
     }
 
     private var detailView: some View {
@@ -204,8 +223,8 @@ struct MenuBarDashboardView: View {
             dashboardItem(
                 type: .storage,
                 value: Double(storageStats?.usedPercentage ?? 0),
-                title: "Storage",
-                subtitle: (storageStats?.formattedFree ?? "—") + " Free",
+                title: "dashboard.storage".localized,
+                subtitle: (storageStats?.formattedFree ?? "—") + " " + "cleaner.free".localized,
                 icon: "internaldrive.fill",
                 gradient: AppTheme.storageGradient,
                 shadowColor: AppTheme.cleanCyan
@@ -225,7 +244,7 @@ struct MenuBarDashboardView: View {
                 type: .cpu,
                 value: Double(cpuStats?.usagePercentage ?? 0),
                 title: "CPU",
-                subtitle: cpuStats != nil ? "\(Int(cpuStats!.usagePercentage))% • \(cpuStats!.thermalStateString)" : "—",
+                subtitle: cpuStats != nil ? "\(cpuStats!.thermalStateString)" : "—",
                 icon: "cpu.fill",
                 gradient: AppTheme.cpuGradient,
                 shadowColor: Color(hex: "FF9F1C")
@@ -329,7 +348,7 @@ struct MenuBarDefaultContentView: View {
         VStack(spacing: 12) {
             // Header with Stop button when scanning
             HStack {
-                Text("System Junk")
+                Text("menuBar.systemJunk".localized)
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
                 
@@ -340,7 +359,7 @@ struct MenuBarDefaultContentView: View {
                     Button(action: {
                         appState.stopScan()
                     }) {
-                        Text("Stop")
+                        Text("menuBar.stop".localized)
                             .font(.system(size: 11, weight: .medium))
                             .foregroundColor(.red)
                     }
@@ -371,7 +390,7 @@ struct MenuBarDefaultContentView: View {
                 } else if !permissionManager.hasHomeAccess {
                     infoItem(icon: "lock.fill", title: "Permission", value: "Access Required")
                 } else {
-                    infoItem(icon: "checkmark.circle", title: "Status", value: "Ready to Scan")
+                    infoItem(icon: "checkmark.circle", title: "menuBar.status".localized, value: "menuBar.readyToScan".localized)
                 }
                 
                 Spacer()
@@ -386,6 +405,28 @@ struct MenuBarDefaultContentView: View {
             } else {
                 // Two buttons: Scan Now + Open Menu
                 HStack(spacing: 8) {
+                    // Open Menu button
+                    Button(action: { AppDelegate.shared?.showMainWindow() }) {
+                        HStack {
+                            Image(systemName: "macwindow")
+                                .font(.system(size: 11, weight: .medium))
+                            Text("menuBar.mintifyApp".localized)
+                                .font(.system(size: 11, weight: .medium))
+                        }
+                        .foregroundColor(AppTheme.textPrimary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                        .background(
+                            LinearGradient(
+                                colors: permissionManager.hasHomeAccess ? [AppTheme.cleanCyan, AppTheme.cleanCyan.opacity(0.8)] : [.orange, .orange.opacity(0.8)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .cornerRadius(6)
+                    }
+                    .buttonStyle(.plain)
+
                     // Scan Now button
                     Button(action: {
                         if !permissionManager.hasHomeAccess {
@@ -401,30 +442,8 @@ struct MenuBarDefaultContentView: View {
                         HStack {
                             Image(systemName: permissionManager.hasHomeAccess ? "arrow.triangle.2.circlepath" : "lock.fill")
                                 .font(.system(size: 11, weight: .semibold))
-                            Text(permissionManager.hasHomeAccess ? "Scan Now" : "Grant Access")
+                            Text(permissionManager.hasHomeAccess ? "cleaner.scanNow".localized : "welcome.grantAccess".localized)
                                 .font(.system(size: 11, weight: .semibold))
-                        }
-                        .foregroundColor(AppTheme.textPrimary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .background(
-                            LinearGradient(
-                                colors: permissionManager.hasHomeAccess ? [AppTheme.cleanCyan, AppTheme.cleanCyan.opacity(0.8)] : [.orange, .orange.opacity(0.8)],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .cornerRadius(6)
-                    }
-                    .buttonStyle(.plain)
-                    
-                    // Open Menu button
-                    Button(action: { AppDelegate.shared?.showMainWindow() }) {
-                        HStack {
-                            Image(systemName: "macwindow")
-                                .font(.system(size: 11, weight: .medium))
-                            Text("Mintify App")
-                                .font(.system(size: 11, weight: .medium))
                         }
                         .foregroundColor(AppTheme.textPrimary)
                         .frame(maxWidth: .infinity)
@@ -437,6 +456,7 @@ struct MenuBarDefaultContentView: View {
                         )
                     }
                     .buttonStyle(.plain)
+                    
                 }
             }
         }
@@ -451,7 +471,7 @@ struct MenuBarDefaultContentView: View {
 
     private var macInfoCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Mac Info")
+            Text("menuBar.macInfo".localized)
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundColor(AppTheme.textPrimary)
             
@@ -521,15 +541,15 @@ struct MenuBarFooterView: View {
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
             if let lastScan = lastScanTime {
-                Label {
-                    Text("\(lastScan, style: .time)")
-                } icon: {
+                HStack(spacing: 4) {
                     Image(systemName: "clock")
+                        .font(.system(size: 10))
+                    Text("\(lastScan, style: .time)")
+                        .font(.system(size: 10))
                 }
-                .font(.system(size: 10))
                 .foregroundColor(AppTheme.textSecondary)
             } else {
-                 Text("Ready")
+                Text("menuBar.ready".localized)
                     .font(.system(size: 10))
                     .foregroundColor(AppTheme.textSecondary)
             }
@@ -538,7 +558,7 @@ struct MenuBarFooterView: View {
             
             HStack(spacing: 8) {
                 Button(action: { AppDelegate.shared?.showMainWindow() }) {
-                    Text("Open Menu")
+                    Text("menuBar.openMenu".localized)
                         .font(.system(size: 11, weight: .medium))
                 }
                 .buttonStyle(.plain)
@@ -551,7 +571,7 @@ struct MenuBarFooterView: View {
                     .foregroundColor(AppTheme.textSecondary.opacity(0.5))
                 
                 Button(action: { AppDelegate.shared?.showAboutWindow() }) {
-                    Text("About")
+                    Text("menuBar.about".localized)
                         .font(.system(size: 11, weight: .medium))
                 }
                 .buttonStyle(.plain)
@@ -563,7 +583,7 @@ struct MenuBarFooterView: View {
                 Text("•")
                     .foregroundColor(AppTheme.textSecondary.opacity(0.5))
                 
-                Button("Quit") {
+                Button("menuBar.quit".localized) {
                     NSApplication.shared.terminate(nil)
                 }
                 .buttonStyle(.plain)

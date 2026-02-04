@@ -25,21 +25,21 @@ struct DetailStatsView: View {
     var onBack: () -> Void
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             // Header Title with Back Button
-            HStack(spacing: 12) {
+            HStack(spacing: 10) {
                 Button(action: onBack) {
                     Image(systemName: "chevron.left")
-                        .font(.system(size: 14, weight: .bold))
+                        .font(.system(size: 12, weight: .bold))
                         .foregroundColor(AppTheme.textSecondary)
-                        .padding(8)
+                        .padding(6)
                         .background(Color.white.opacity(0.05))
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
                 
                 Text(titleForType)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.system(size: 15, weight: .bold))
                     .foregroundColor(AppTheme.textPrimary)
                 Spacer()
             }
@@ -55,7 +55,7 @@ struct DetailStatsView: View {
                 consumersList
             }
         }
-        .padding(16)
+        .padding(EdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16))
         // Removed fixed width so it adapts to parent container
     }
     
@@ -107,17 +107,15 @@ struct DetailStatsView: View {
     // MARK: - Storage Body
     
     private var storageBody: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 10) {
-                // Storage Overview Card
-                storageOverviewCard
-                
-                // Quick Stats Grid
-                storageQuickStats
-                
-                // System Junk Card
-                storageSystemJunkCard
-            }
+        VStack(spacing: 10) {
+            // Storage Overview Card
+            storageOverviewCard
+            
+            // Quick Stats Grid
+            storageQuickStats
+            
+            // System Junk Card
+            storageSystemJunkCard
         }
     }
     
@@ -130,7 +128,7 @@ struct DetailStatsView: View {
                 Image(systemName: "internaldrive.fill")
                     .font(.system(size: 14))
                     .foregroundStyle(AppTheme.storageGradient)
-                Text("Macintosh HD")
+                Text("cleaner.macintoshHD".localized)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
                 Spacer()
@@ -161,7 +159,7 @@ struct DetailStatsView: View {
                     Circle()
                         .fill(AppTheme.cleanCyan)
                         .frame(width: 6, height: 6)
-                    Text("Used")
+                    Text("cleaner.used".localized)
                         .font(.system(size: 10))
                         .foregroundColor(AppTheme.textSecondary)
                     Text(storageStats?.formattedUsed ?? "--")
@@ -175,7 +173,7 @@ struct DetailStatsView: View {
                     Circle()
                         .fill(Color.white.opacity(0.3))
                         .frame(width: 6, height: 6)
-                    Text("Free")
+                    Text("cleaner.free".localized)
                         .font(.system(size: 10))
                         .foregroundColor(AppTheme.textSecondary)
                     Text(storageStats?.formattedFree ?? "--")
@@ -214,10 +212,10 @@ struct DetailStatsView: View {
     
     private var storageHealthStatus: String {
         let percentage = storageStats?.usedPercentage ?? 0
-        if percentage < 50 { return "Excellent" }
-        else if percentage < 75 { return "Good" }
-        else if percentage < 90 { return "Fair" }
-        else { return "Low" }
+        if percentage < 50 { return "disk.excellent".localized }
+        else if percentage < 75 { return "disk.good".localized }
+        else if percentage < 90 { return "disk.fair".localized }
+        else { return "disk.low".localized }
     }
     
     private var storageHealthColor: Color {
@@ -231,12 +229,12 @@ struct DetailStatsView: View {
     // MARK: - System Junk Card
     
     private var storageSystemJunkCard: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 8) {
             HStack {
                 Image(systemName: "trash.fill")
                     .font(.system(size: 12))
                     .foregroundColor(AppTheme.cleanPink)
-                Text("System Junk")
+                Text("disk.systemJunk".localized)
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
                 Spacer()
@@ -244,7 +242,7 @@ struct DetailStatsView: View {
                 if appState.isScanning {
                     ProgressView()
                         .controlSize(.small)
-                        .scaleEffect(0.7)
+                        .scaleEffect(0.6)
                 }
             }
             
@@ -257,13 +255,13 @@ struct DetailStatsView: View {
                             .lineLimit(1)
                     } else if appState.hasScanned {
                         Text(appState.formattedTotalSize)
-                            .font(.system(size: 16, weight: .bold))
+                            .font(.system(size: 15, weight: .bold))
                             .foregroundColor(AppTheme.textPrimary)
-                        Text("Cleanable files found")
+                        Text("disk.cleanableFound".localized)
                             .font(.system(size: 10))
                             .foregroundColor(AppTheme.textSecondary)
                     } else {
-                        Text("Not scanned yet")
+                        Text("disk.notScanned".localized)
                             .font(.system(size: 12))
                             .foregroundColor(AppTheme.textSecondary)
                     }
@@ -273,14 +271,13 @@ struct DetailStatsView: View {
                 
                 if !appState.isScanning {
                     Button(action: {
-                        // Always open Cleaner window - let user decide what to clean
                         AppDelegate.shared?.showMainWindow()
                     }) {
-                        Text(appState.hasScanned && appState.totalCleanableSize > 0 ? "Clean" : "Scan")
+                        Text(appState.hasScanned && appState.totalCleanableSize > 0 ? "disk.clean".localized : "cleaner.scan".localized)
                             .font(.system(size: 11, weight: .semibold))
                             .foregroundColor(AppTheme.textPrimary)
                             .padding(.horizontal, 14)
-                            .padding(.vertical, 6)
+                            .padding(.vertical, 5)
                             .background(
                                 Capsule().fill(
                                     appState.hasScanned && appState.totalCleanableSize > 0 
@@ -297,10 +294,10 @@ struct DetailStatsView: View {
                 ProgressView(value: appState.scanProgress)
                     .progressViewStyle(.linear)
                     .tint(AppTheme.cleanCyan)
-                    .frame(height: 3)
+                    .frame(height: 2)
             }
         }
-        .padding(12)
+        .padding(10)
         .background(AppTheme.cardBackground)
         .cornerRadius(10)
         .overlay(RoundedRectangle(cornerRadius: 10).stroke(AppTheme.cardBorder, lineWidth: 1))
@@ -310,7 +307,7 @@ struct DetailStatsView: View {
     
     private var storageQuickActions: some View {
         VStack(spacing: 6) {
-            Text("Quick Actions")
+            Text("disk.quickActions".localized)
                 .font(.system(size: 10, weight: .medium))
                 .foregroundColor(AppTheme.textSecondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -320,7 +317,7 @@ struct DetailStatsView: View {
                     Image(systemName: "doc.badge.clock.fill")
                         .font(.system(size: 12))
                         .foregroundStyle(AppTheme.storageGradient)
-                    Text("Find Large Files")
+                    Text("disk.findLargeFiles".localized)
                         .font(.system(size: 11, weight: .medium))
                         .foregroundColor(AppTheme.textPrimary)
                     Spacer()
@@ -341,10 +338,18 @@ struct DetailStatsView: View {
     
     private var consumersList: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Top Consumers")
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundColor(AppTheme.textPrimary)
-                .padding(.horizontal, 4)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("disk.topConsumers".localized)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(AppTheme.textPrimary)
+                
+                // Disclaimer for sandbox limitations
+                Text("disk.consumersDisclaimer".localized)
+                    .font(.system(size: 10))
+                    .foregroundColor(AppTheme.textSecondary.opacity(0.7))
+                    .lineLimit(2)
+            }
+            .padding(.horizontal, 4)
             
             VStack(spacing: 0) {
                 ScrollView {

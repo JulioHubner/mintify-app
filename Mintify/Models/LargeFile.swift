@@ -62,28 +62,38 @@ enum FileSizeFilter: Int, CaseIterable, Identifiable {
 
 /// Sort options for file list
 enum FileSortOption: String, CaseIterable, Identifiable {
-    case sizeDesc = "Size (Largest)"
-    case sizeAsc = "Size (Smallest)"
-    case dateDesc = "Date (Newest)"
-    case dateAsc = "Date (Oldest)"
-    case name = "Name"
+    case sizeDesc = "sizeDesc"
+    case sizeAsc = "sizeAsc"
+    case dateDesc = "dateDesc"
+    case dateAsc = "dateAsc"
+    case name = "name"
     
     var id: String { rawValue }
+    
+    /// Localized display name
+    var localizedName: String {
+        return "sort.\(rawValue)".localized
+    }
 }
 
 /// File type/location category
 enum FileTypeCategory: String, CaseIterable, Identifiable {
-    case all = "All Files"
-    case downloads = "Downloads"
-    case desktop = "Desktop"
-    case documents = "Documents"
-    case videos = "Videos"
-    case images = "Images"
-    case archives = "Archives"
-    case apps = "Applications"
-    case other = "Other"
+    case all = "all"
+    case downloads = "downloads"
+    case desktop = "desktop"
+    case documents = "documents"
+    case videos = "videos"
+    case images = "images"
+    case archives = "archives"
+    case apps = "apps"
+    case other = "other"
     
     var id: String { rawValue }
+    
+    /// Localized display name
+    var localizedName: String {
+        return "fileType.\(rawValue)".localized
+    }
     
     var icon: String {
         switch self {

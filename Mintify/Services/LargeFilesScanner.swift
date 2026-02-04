@@ -7,10 +7,8 @@ class LargeFilesScanner {
     private let fileManager = FileManager.default
     
     private var homeDir: URL {
-        if let accessURL = PermissionManager.shared.homeURL {
-            return accessURL
-        }
-        return FileManager.default.homeDirectoryForCurrentUser
+        // Use ensureHomeAccess() to guarantee security-scoped access is active
+        return PermissionManager.shared.ensureHomeAccess() ?? FileManager.default.homeDirectoryForCurrentUser
     }
     
     /// Folders to scan for large files

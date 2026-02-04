@@ -100,6 +100,7 @@ struct CircularProgressView: View {
                 Text(sub)
                     .font(.system(size: actualSubtitleFontSize, weight: .medium))
                     .foregroundColor(AppTheme.textSecondary)
+                    .lineLimit(1)
             }
         }
         // Single smooth spring animation for all size changes

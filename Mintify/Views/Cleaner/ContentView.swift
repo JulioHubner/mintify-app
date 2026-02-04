@@ -50,21 +50,21 @@ struct ContentView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .alert("Clean \(appState.formattedSelectedSize)?", isPresented: $showConfirmClean) {
-            Button("Cancel", role: .cancel) { }
-            Button("Clean", role: .destructive) {
+        .alert("alert.cleanConfirmTitle".localized(appState.formattedSelectedSize), isPresented: $showConfirmClean) {
+            Button("alert.cancel".localized, role: .cancel) { }
+            Button("alert.clean".localized, role: .destructive) {
                 performClean()
             }
         } message: {
-            Text("This will permanently delete the selected cached files. This action cannot be undone.")
+            Text("alert.cleanConfirmMessage".localized)
         }
-        .alert("Folder Access Required", isPresented: $showPermissionAlert) {
-            Button("Grant Access") {
+        .alert("alert.folderAccessRequired".localized, isPresented: $showPermissionAlert) {
+            Button("permission.grant".localized) {
                 permissionManager.requestHomeAccess { _ in }
             }
-            Button("Cancel", role: .cancel) { }
+            Button("alert.cancel".localized, role: .cancel) { }
         } message: {
-            Text("Mintify needs access to your Home folder to scan for files. Would you like to grant access now?")
+            Text("alert.folderAccessMessage".localized)
         }
     }
     
@@ -89,7 +89,7 @@ struct ContentView: View {
                 .foregroundStyle(AppTheme.mintifyGradient)
                 .font(.title2)
             
-            Text("Storage Cleaner")
+            Text("cleaner.title".localized)
                 .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundColor(AppTheme.textPrimary)
             
@@ -102,7 +102,7 @@ struct ContentView: View {
                         .controlSize(.small)
                         .tint(AppTheme.cleanCyan)
                     
-                    Text("Scanning...")
+                    Text("cleaner.scanning".localized)
                         .font(.system(size: 13, weight: .medium))
                         .foregroundColor(AppTheme.textPrimary)
                     
@@ -131,7 +131,7 @@ struct ContentView: View {
                     Button(action: { startScanWithPermissionCheck() }) {
                         HStack(spacing: 6) {
                             Image(systemName: "arrow.clockwise")
-                            Text("Scan")
+                            Text("cleaner.scan".localized)
                         }
                         .font(.system(size: 13, weight: .medium))
                         .foregroundColor(AppTheme.textPrimary)
@@ -196,7 +196,7 @@ struct ContentView: View {
             if appState.isScanning {
                 // Scanning Path Status (Bottom Bar)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Scanning Directory:")
+                    Text("cleaner.scanningDirectory".localized)
                         .font(.caption2)
                         .foregroundColor(AppTheme.textSecondary)
                     Text(appState.currentScanningCategory)
@@ -211,7 +211,7 @@ struct ContentView: View {
                     HStack(spacing: 6) {
                         Image(systemName: appState.allSelected ? "checkmark.square.fill" : "square")
                             .foregroundColor(appState.allSelected ? AppTheme.cleanCyan : AppTheme.textSecondary)
-                        Text("Select All")
+                        Text("cleaner.selectAll".localized)
                             .foregroundColor(AppTheme.textPrimary)
                     }
                     .font(.system(size: 13))
@@ -226,7 +226,7 @@ struct ContentView: View {
                     Text(appState.formattedSelectedSize)
                         .font(.system(size: 16, weight: .bold, design: .rounded))
                         .foregroundColor(AppTheme.cleanCyan)
-                    Text("Selected for cleanup")
+                    Text("cleaner.selectedForCleanup".localized)
                         .font(.caption)
                         .foregroundColor(AppTheme.textSecondary)
                 }
@@ -240,7 +240,7 @@ struct ContentView: View {
                         } else {
                             Image(systemName: "sparkles")
                         }
-                        Text("Clean Now")
+                        Text("cleaner.cleanNow".localized)
                     }
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
@@ -408,7 +408,7 @@ struct SystemStatusHero: View {
                 Text("\(Int(diskUsage * 100))%")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundColor(AppTheme.textPrimary)
-                Text("Used")
+                Text("cleaner.used".localized)
                     .font(.caption)
                     .foregroundColor(AppTheme.textSecondary)
             }
@@ -418,18 +418,18 @@ struct SystemStatusHero: View {
     private var infoView: some View {
         VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("Macintosh HD")
+                Text("cleaner.macintoshHD".localized)
                     .font(.title2.bold())
                     .foregroundColor(AppTheme.textPrimary)
                 
-                Text("Your system is ready for a cleanup.")
+                Text("cleaner.systemReady".localized)
                     .font(.subheadline)
                     .foregroundColor(AppTheme.textSecondary)
             }
             
             HStack(spacing: 24) {
-                StatusMetric(label: "Free", value: freeSpace, color: AppTheme.cleanCyan)
-                StatusMetric(label: "Total", value: totalSpace, color: AppTheme.textSecondary)
+                StatusMetric(label: "cleaner.free".localized, value: freeSpace, color: AppTheme.cleanCyan)
+                StatusMetric(label: "cleaner.total".localized, value: totalSpace, color: AppTheme.textSecondary)
             }
         }
     }
@@ -438,7 +438,7 @@ struct SystemStatusHero: View {
         Button(action: onScan) {
             HStack(spacing: 8) {
                 Image(systemName: "arrow.clockwise")
-                Text("Scan Now")
+                Text("cleaner.scanNow".localized)
             }
             .font(.system(size: 13, weight: .medium))
             .foregroundColor(AppTheme.textPrimary)
@@ -497,7 +497,7 @@ struct CategoryGrid: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Areas to Clean")
+            Text("cleaner.areasToClean".localized)
                 .font(.headline)
                 .foregroundColor(AppTheme.textPrimary)
                 .padding(.leading, 4)
@@ -506,8 +506,8 @@ struct CategoryGrid: View {
                 ForEach(CleanCategory.allCases, id: \.self) { category in
                     DashboardCard(
                         icon: category.icon,
-                        title: category.rawValue,
-                        subtitle: category.description,
+                        title: category.localizedName,
+                        subtitle: category.localizedDescription,
                         color: colorFor(category)
                     )
                 }

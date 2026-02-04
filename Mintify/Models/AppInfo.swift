@@ -64,13 +64,18 @@ struct LeftoverItem: Identifiable, Hashable {
 
 /// Types of leftover files
 enum LeftoverType: String, CaseIterable {
-    case applicationSupport = "Application Support"
-    case preferences = "Preferences"
-    case caches = "Caches"
-    case containers = "Containers"
-    case logs = "Logs"
-    case savedState = "Saved State"
-    case other = "Other"
+    case applicationSupport = "applicationSupport"
+    case preferences = "preferences"
+    case caches = "caches"
+    case containers = "containers"
+    case logs = "logs"
+    case savedState = "savedState"
+    case other = "other"
+    
+    /// Localized display name
+    var localizedName: String {
+        return "leftover.\(rawValue)".localized
+    }
     
     var icon: String {
         switch self {

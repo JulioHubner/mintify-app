@@ -100,13 +100,13 @@ struct DuplicateGroup: Identifiable {
 
 /// Categories for filtering duplicate files
 enum DuplicateCategory: String, CaseIterable {
-    case all = "All"
-    case images = "Images"
-    case videos = "Videos"
-    case audio = "Audio"
-    case documents = "Documents"
-    case archives = "Archives"
-    case other = "Other"
+    case all = "all"
+    case images = "images"
+    case videos = "videos"
+    case audio = "audio"
+    case documents = "documents"
+    case archives = "archives"
+    case other = "other"
     
     var icon: String {
         switch self {
@@ -118,6 +118,11 @@ enum DuplicateCategory: String, CaseIterable {
         case .archives: return "archivebox"
         case .other: return "doc"
         }
+    }
+    
+    /// Localized display name
+    var localizedName: String {
+        return "dupCategory.\(rawValue)".localized
     }
     
     static func from(extension ext: String) -> DuplicateCategory {
@@ -154,11 +159,16 @@ enum DuplicateCategory: String, CaseIterable {
 
 /// Sort options for duplicate groups
 enum DuplicateSortOption: String, CaseIterable, Identifiable {
-    case sizeDesc = "Size (Largest)"
-    case sizeAsc = "Size (Smallest)"
-    case countDesc = "Copies (Most)"
-    case countAsc = "Copies (Least)"
-    case name = "Name"
+    case sizeDesc = "sizeDesc"
+    case sizeAsc = "sizeAsc"
+    case countDesc = "countDesc"
+    case countAsc = "countAsc"
+    case name = "name"
     
     var id: String { rawValue }
+    
+    /// Localized display name
+    var localizedName: String {
+        return "sort.\(rawValue)".localized
+    }
 }

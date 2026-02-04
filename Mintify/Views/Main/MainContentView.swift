@@ -4,6 +4,7 @@ import SwiftUI
 struct MainContentView: View {
     @EnvironmentObject var appState: CleanerState
     @ObservedObject var themeManager = ThemeManager.shared
+    @ObservedObject var localizationManager = LocalizationManager.shared
     
     var body: some View {
         ZStack {
@@ -88,7 +89,7 @@ struct MainContentView: View {
                         )
                 }
                 .buttonStyle(.plain)
-                .help("Settings")
+                .help("settings.title".localized)
                 
                 // About button
                 Button(action: { AppDelegate.shared?.showAboutWindow() }) {
@@ -102,7 +103,7 @@ struct MainContentView: View {
                         )
                 }
                 .buttonStyle(.plain)
-                .help("About Mintify")
+                .help("about.title".localized)
             }
             .padding(.horizontal, 12)
             .padding(.bottom, 16)
@@ -124,7 +125,7 @@ struct SidebarTabButton: View {
                     .font(.system(size: 15))
                     .frame(width: 20)
                 
-                Text(tab.rawValue)
+                Text(tab.localizedName)
                     .font(.system(size: 13, weight: .medium))
                 
                 Spacer()

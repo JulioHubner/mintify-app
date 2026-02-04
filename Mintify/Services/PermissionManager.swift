@@ -11,10 +11,25 @@ class PermissionManager: ObservableObject {
     @Published var trashURL: URL?
     
     private let bookmarkKey = "security_scoped_bookmarks"
+    private var isAccessingHomeResource = false
     
     init() {
         restoreBookmarks()
         checkPermissions()
+    }
+    
+    /// Ensure security-scoped access is active and return the accessible home URL
+    /// Call this before any file operation that needs home folder access
+    func ensureHomeAccess() -> URL? {
+        // If we have a bookmarked URL, ensure access is started
+        if let url = homeURL {
+            if !isAccessingHomeResource {
+                isAccessingHomeResource = url.startAccessingSecurityScopedResource()
+            }
+            return url
+        }
+        // Fallback to default home directory (limited access)
+        return FileManager.default.homeDirectoryForCurrentUser
     }
     
     func checkPermissions() {
@@ -84,7 +99,7 @@ class PermissionManager: ObservableObject {
             
             let handleResponse: (NSApplication.ModalResponse) -> Void = { response in
                 if response == .OK, let url = openPanel.url {
-                    self.saveBookmark(for: url)
+                    self.saveHomeBookmark(for: url)
                     self.checkPermissions()
                     completion(true)
                 } else {
@@ -163,7 +178,9 @@ class PermissionManager: ObservableObject {
     
     // MARK: - Bookmark Management
     
-    private func saveBookmark(for url: URL) {
+    /// Save a security-scoped bookmark for the given URL
+    /// Call this after user selects a folder via NSOpenPanel
+    func saveHomeBookmark(for url: URL) {
         do {
             let bookmarkData = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
             var bookmarks = UserDefaults.standard.dictionary(forKey: bookmarkKey) ?? [:]
@@ -171,8 +188,10 @@ class PermissionManager: ObservableObject {
             UserDefaults.standard.set(bookmarks, forKey: bookmarkKey)
             
             if url.startAccessingSecurityScopedResource() {
+                isAccessingHomeResource = true
                 DispatchQueue.main.async {
                     self.homeURL = url
+                    self.hasHomeAccess = true
                 }
             }
         } catch {

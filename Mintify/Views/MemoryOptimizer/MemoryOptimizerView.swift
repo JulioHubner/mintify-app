@@ -86,7 +86,7 @@ struct MemoryOptimizerView: View {
                 .foregroundStyle(AppTheme.memoryGradient)
                 .font(.title2)
             
-            Text("Memory Optimizer")
+            Text("memory.title".localized)
                 .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundColor(AppTheme.textPrimary)
             
@@ -102,7 +102,7 @@ struct MemoryOptimizerView: View {
                     } else {
                         Image(systemName: "sparkles")
                     }
-                    Text(isFreeing ? "Freeing..." : "Free Up Memory")
+                    Text(isFreeing ? "memory.freeing".localized : "memory.freeUp".localized)
                 }
                 .font(.system(size: 14, weight: .semibold))
                 .foregroundColor(AppTheme.textPrimary)
@@ -143,7 +143,7 @@ struct MemoryOptimizerView: View {
                         .font(.system(size: 32, weight: .bold))
                         .foregroundColor(AppTheme.textPrimary)
                     
-                    Text("Used")
+                    Text("memory.used".localized)
                         .font(.system(size: 14))
                         .foregroundColor(AppTheme.textSecondary)
                 }
@@ -154,21 +154,21 @@ struct MemoryOptimizerView: View {
             // Memory Info Cards
             VStack(spacing: 12) {
                 MemoryInfoCard(
-                    title: "Used Memory",
+                    title: "memory.usedMemory".localized,
                     value: memoryStats?.formattedUsed ?? "—",
                     icon: "circle.fill",
                     color: AppTheme.cleanPink
                 )
                 
                 MemoryInfoCard(
-                    title: "Free Memory",
+                    title: "memory.freeMemory".localized,
                     value: memoryStats?.formattedFree ?? "—",
                     icon: "circle.fill",
                     color: .green
                 )
                 
                 MemoryInfoCard(
-                    title: "Total Memory",
+                    title: "memory.totalMemory".localized,
                     value: memoryStats?.formattedTotal ?? "—",
                     icon: "memorychip",
                     color: AppTheme.textSecondary
@@ -191,42 +191,42 @@ struct MemoryOptimizerView: View {
     
     private var memoryBreakdownSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Memory Breakdown")
+            Text("memory.breakdown".localized)
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundColor(AppTheme.textPrimary)
             
             if let detailed = detailedStats {
                 VStack(spacing: 12) {
                     MemoryBreakdownRow(
-                        title: "App Memory",
+                        title: "memory.appMemory".localized,
                         value: detailed.formattedApp,
                         percentage: Double(detailed.appMemory) / Double(ProcessInfo.processInfo.physicalMemory) * 100,
                         color: AppTheme.cleanCyan
                     )
                     
                     MemoryBreakdownRow(
-                        title: "Wired",
+                        title: "memory.wired".localized,
                         value: detailed.formattedWired,
                         percentage: Double(detailed.wired) / Double(ProcessInfo.processInfo.physicalMemory) * 100,
                         color: .orange
                     )
                     
                     MemoryBreakdownRow(
-                        title: "Compressed",
+                        title: "memory.compressed".localized,
                         value: detailed.formattedCompressed,
                         percentage: Double(detailed.compressed) / Double(ProcessInfo.processInfo.physicalMemory) * 100,
                         color: .purple
                     )
                     
                     MemoryBreakdownRow(
-                        title: "Memory Pressure",
+                        title: "memory.pressure".localized,
                         value: "\(Int(detailed.pressurePercentage))%",
                         percentage: detailed.pressurePercentage,
                         color: pressureColor(detailed.pressurePercentage)
                     )
                 }
             } else {
-                Text("Loading...")
+                Text("common.loading".localized)
                     .foregroundColor(AppTheme.textSecondary)
             }
         }
@@ -246,7 +246,7 @@ struct MemoryOptimizerView: View {
     private var topConsumersSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text("Top Memory Consumers")
+                Text("memory.topConsumers".localized)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
                 
@@ -256,7 +256,7 @@ struct MemoryOptimizerView: View {
                     NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Applications/Utilities/Activity Monitor.app"))
                 }) {
                     HStack(spacing: 4) {
-                        Text("Activity Monitor")
+                        Text("memory.activityMonitor".localized)
                             .font(.system(size: 12))
                         Image(systemName: "arrow.up.right")
                             .font(.system(size: 10))
@@ -272,7 +272,7 @@ struct MemoryOptimizerView: View {
                     VStack(spacing: 8) {
                         ProgressView()
                             .controlSize(.regular)
-                        Text("Loading processes...")
+                        Text("memory.loadingProcesses".localized)
                             .font(.caption)
                             .foregroundColor(AppTheme.textSecondary)
                     }

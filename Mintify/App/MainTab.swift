@@ -2,13 +2,13 @@ import SwiftUI
 
 /// Tab navigation for main window
 enum MainTab: String, CaseIterable {
-    case cleaner = "Cleaner"
-    case largeFiles = "Large Files"
-    case duplicates = "Duplicates"
-    case memory = "Memory"
-    case diskSpace = "Disk Space"
-    case uninstaller = "Uninstaller"
-    case settings = "Settings"
+    case cleaner = "cleaner"
+    case largeFiles = "largeFiles"
+    case duplicates = "duplicates"
+    case memory = "memory"
+    case diskSpace = "diskSpace"
+    case uninstaller = "uninstaller"
+    case settings = "settings"
     
     var icon: String {
         switch self {
@@ -20,5 +20,10 @@ enum MainTab: String, CaseIterable {
         case .uninstaller: return "trash.circle"
         case .settings: return "gearshape.fill"
         }
+    }
+    
+    /// Localized display name for the tab
+    var localizedName: String {
+        return "tab.\(rawValue)".localized
     }
 }

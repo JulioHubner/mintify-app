@@ -1,0 +1,351 @@
+/* Tab Names */
+"tab.cleaner" = "Cleaner";
+"tab.largeFiles" = "Large Files";
+"tab.duplicates" = "Duplicates";
+"tab.memory" = "Memory";
+"tab.diskSpace" = "Disk Space";
+"tab.uninstaller" = "Uninstaller";
+"tab.settings" = "Settings";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.general" = "General";
+"settings.appearance" = "Appearance";
+"settings.permissions" = "Permissions";
+"settings.language" = "Language";
+"settings.launchAtLogin" = "Launch at Login";
+"settings.launchAtLoginDesc" = "Automatically open Mintify when you log in";
+"settings.scanCategories" = "Scan Categories";
+"settings.scanCategoriesDesc" = "Choose which folders to scan";
+"settings.selectAll" = "Select All";
+"settings.deselectAll" = "Deselect All";
+"settings.reset" = "Reset";
+"settings.theme" = "Theme";
+"settings.themeDesc" = "Choose your preferred theme";
+"settings.chooseLanguage" = "Choose Language";
+"settings.chooseLanguageDesc" = "Select your preferred language";
+"settings.restartNote" = "Some changes may require reopening windows to take effect.";
+
+/* Permissions */
+"permission.accessStatus" = "Access Status";
+"permission.accessDesc" = "Mintify needs some permissions to work";
+"permission.homeFolder" = "Home Folder Access";
+"permission.homeFolderDesc" = "Required to scan files";
+"permission.trash" = "Trash Access";
+"permission.trashDesc" = "Required to scan Trash";
+"permission.granted" = "Granted";
+"permission.grant" = "Grant Access";
+"permission.info" = "If permissions don't work, grant Full Disk Access in System Settings → Privacy & Security.";
+
+/* Storage Cleaner */
+"cleaner.title" = "Storage Cleaner";
+"cleaner.scanning" = "Scanning...";
+"cleaner.scanNow" = "Scan Now";
+"cleaner.scan" = "Scan";
+"cleaner.cleanNow" = "Clean Now";
+"cleaner.selectAll" = "Select All";
+"cleaner.deselectAll" = "Deselect All";
+"cleaner.selectedForCleanup" = "Selected for cleanup";
+"cleaner.lastScan" = "Last scan: %@";
+"cleaner.scanningDirectory" = "Scanning directory:";
+"cleaner.areasToClean" = "Areas to Clean";
+"cleaner.macintoshHD" = "Macintosh HD";
+"cleaner.systemReady" = "System ready for cleanup.";
+"cleaner.free" = "Free";
+"cleaner.total" = "Total";
+"cleaner.used" = "Used";
+"cleaner.cleaning" = "Cleaning...";
+"cleaner.deleting" = "Deleting...";
+"cleaner.initializing" = "Initializing...";
+"cleaner.stopScan" = "Stop Scan";
+"cleaner.showFiles" = "Show Files";
+
+/* Clean Categories */
+"category.userCaches" = "User Caches";
+"category.userCachesDesc" = "Application caches";
+"category.browserCaches" = "Browser Caches";
+"category.browserCachesDesc" = "Safari, Chrome, Firefox caches";
+"category.logs" = "Logs";
+"category.logsDesc" = "Application logs";
+"category.xcode" = "Xcode";
+"category.xcodeDesc" = "DerivedData & Device Support";
+"category.developerTools" = "Developer Tools";
+"category.developerToolsDesc" = "NPM, Yarn, Gradle, CocoaPods";
+"category.trash" = "Trash";
+"category.trashDesc" = "Items in Trash";
+
+/* Large Files */
+"largeFiles.title" = "Large Files";
+"largeFiles.scan" = "Scan";
+"largeFiles.scanFiles" = "Scan Files";
+"largeFiles.scanning" = "Scanning...";
+"largeFiles.scanningForLargeFiles" = "Scanning for large files...";
+"largeFiles.stopScan" = "Stop Scan";
+"largeFiles.noLargeFilesFound" = "No Large Files Found";
+"largeFiles.filesLargerThan" = "Files larger than %@ will appear here";
+"largeFiles.minimumSize" = "Minimum Size";
+"largeFiles.fileType" = "File Type";
+"largeFiles.moveToTrash" = "Move to Trash";
+"largeFiles.movingToTrash" = "Moving to Trash...";
+"largeFiles.selectedCount" = "%@ selected";
+"largeFiles.fileCount" = "%@ files";
+"largeFiles.sort" = "Sort:";
+"largeFiles.filter" = "Filter";
+"largeFiles.selectAll" = "Select All";
+"largeFiles.scanNow" = "Scan Now";
+"largeFiles.confirmDelete" = "Move %@ files (%@) to Trash?";
+"largeFiles.needsAccess" = "Mintify needs home folder access to scan for large files.";
+"largeFiles.grantAccess" = "Grant Access";
+"largeFiles.accessGranted" = "Home folder access granted";
+"largeFiles.selectHomeFolder" = "Select your Home folder to grant Mintify access for scanning large files";
+
+/* Duplicate Finder */
+"duplicates.title" = "Duplicate Finder";
+"duplicates.scan" = "Scan";
+"duplicates.scanning" = "Scanning...";
+"duplicates.deleting" = "Deleting files...";
+"duplicates.stop" = "Stop";
+"duplicates.findDuplicates" = "Find Duplicates";
+"duplicates.clickToScan" = "Click Scan to find duplicate files";
+"duplicates.scanNow" = "Scan Now";
+"duplicates.groupCount" = "%@ groups";
+"duplicates.fileType" = "File Type";
+"duplicates.groups" = "%d groups";
+"duplicates.copies" = "%d copies";
+"duplicates.recoverable" = "%@ recoverable";
+"duplicates.autoSelect" = "Auto-select Duplicates";
+"duplicates.removeSelected" = "Remove Selected";
+"duplicates.removeConfirm" = "Remove %@ duplicates?";
+"duplicates.removeMessage" = "This will move %@ of duplicate files to Trash. Original files will be kept.";
+"duplicates.original" = "ORIGINAL";
+"duplicates.accessGranted" = "Home folder access granted";
+"duplicates.needsAccess" = "Mintify needs home folder access to find duplicates.";
+"duplicates.grantAccess" = "Grant Access";
+"duplicates.sort" = "Sort:";
+"duplicates.noDuplicates" = "No Duplicates Found";
+"duplicates.noDuplicatesDesc" = "Great! No duplicate files were found.";
+"duplicates.selectHomeFolder" = "Select your Home folder to grant Mintify access for finding duplicates";
+
+/* Duplicate Categories */
+"dupCategory.all" = "All";
+"dupCategory.images" = "Images";
+"dupCategory.videos" = "Videos";
+"dupCategory.audio" = "Audio";
+"dupCategory.documents" = "Documents";
+"dupCategory.music" = "Music";
+"dupCategory.archives" = "Archives";
+"dupCategory.other" = "Other";
+
+/* Memory Optimizer */
+"memory.title" = "Memory Optimizer";
+"memory.freeUp" = "Free Up Memory";
+"memory.freeing" = "Freeing...";
+"memory.freed" = "Freed %@";
+"memory.optimized" = "Memory optimized";
+"memory.usedMemory" = "Used Memory";
+"memory.freeMemory" = "Free Memory";
+"memory.totalMemory" = "Total Memory";
+"memory.breakdown" = "Memory Breakdown";
+"memory.appMemory" = "App Memory";
+"memory.wired" = "Wired";
+"memory.compressed" = "Compressed";
+"memory.pressure" = "Memory Pressure";
+"memory.topConsumers" = "Top Memory Consumers";
+"memory.loadingProcesses" = "Loading processes...";
+"memory.activityMonitor" = "Activity Monitor";
+"memory.used" = "Used";
+
+/* App Uninstaller */
+"uninstaller.title" = "App Uninstaller";
+"uninstaller.scan" = "Scan";
+"uninstaller.scanning" = "Scanning Applications...";
+"uninstaller.findingApps" = "Finding installed applications and calculating sizes";
+"uninstaller.completelyRemove" = "Completely remove apps and their leftover files.\nFind hidden cache, preferences, and support files.";
+"uninstaller.scanAll" = "Scan all installed applications";
+"uninstaller.findLeftovers" = "Find leftover files in Library";
+"uninstaller.moveToTrash" = "Move to Trash for safe removal";
+"uninstaller.searchApps" = "Search apps...";
+"uninstaller.apps" = "%d apps";
+"uninstaller.selectApp" = "Select an app";
+"uninstaller.selectAppDesc" = "Choose an app from the list to view its details and leftovers";
+"uninstaller.findingLeftovers" = "Finding leftovers...";
+"uninstaller.noLeftovers" = "No leftovers found";
+"uninstaller.cleanInstall" = "This app appears to be cleanly installed";
+"uninstaller.app" = "App";
+"uninstaller.leftovers" = "Leftovers";
+"uninstaller.total" = "Total";
+"uninstaller.removeApp" = "Remove Application";
+"uninstaller.noBundleId" = "No bundle ID";
+"uninstaller.scanningDesc" = "Finding installed applications and calculating sizes";
+"uninstaller.desc" = "Completely remove apps and their leftover files.\nFind hidden cache, preferences, and support files.";
+"uninstaller.feature1" = "Scan all installed applications";
+"uninstaller.feature2" = "Find leftover files in Library";
+"uninstaller.feature3" = "Move to Trash for safe removal";
+"uninstaller.appCount" = "%@ apps";
+"uninstaller.appsProgress" = "%@ / %@ apps";
+"uninstaller.removeAppMessage" = "Leftover files will be moved to Trash. You will then be guided to manually delete the app from Finder.";
+"uninstaller.removeConfirmMessage" = "Are you sure you want to remove %@ and its leftovers? This will move them to Trash.";
+
+/* Disk Space */
+"disk.title" = "Disk Space";
+"disk.analyzeYourDisk" = "Analyze Your Disk";
+"disk.scanDiskDesc" = "Scan your disk to see what's taking up space.\nIncludes system, user data, and applications.";
+"disk.total" = "Total";
+"disk.spaceUsage" = "Space Usage by Folder";
+"disk.noItems" = "No items to display";
+"disk.permissionRequired" = "Some folders may require permission to access";
+"disk.selectHomeFolder" = "Select your Home folder to grant Mintify access for disk analysis";
+
+/* Leftover Types */
+"leftover.caches" = "Caches";
+"leftover.preferences" = "Preferences";
+"leftover.applicationSupport" = "Application Support";
+"leftover.savedState" = "Saved State";
+"leftover.containers" = "Containers";
+"leftover.logs" = "Logs";
+"leftover.other" = "Other";
+
+/* Menu Bar */
+"menuBar.mintify" = "Mintify";
+"menuBar.macInfo" = "Mac Info";
+"menuBar.model" = "Model";
+"menuBar.chip" = "Chip";
+"menuBar.macos" = "macOS";
+"menuBar.systemJunk" = "System Junk";
+"menuBar.cleanable" = "Cleanable";
+"menuBar.permission" = "Permission";
+"menuBar.accessRequired" = "Access Required";
+"menuBar.status" = "Status";
+"menuBar.readyToScan" = "Ready to scan";
+"menuBar.grantAccess" = "Grant Access";
+"menuBar.mintifyApp" = "Open Mintify";
+"menuBar.openMenu" = "Open Menu";
+"menuBar.about" = "About";
+"menuBar.quit" = "Quit";
+"menuBar.ready" = "Ready";
+"menuBar.stop" = "Stop";
+"menuBar.settings" = "Settings";
+
+/* Dashboard */
+"dashboard.storage" = "Storage";
+"dashboard.memory" = "Memory";
+"dashboard.cpu" = "CPU";
+
+/* CPU Thermal States */
+"cpu.normal" = "Normal";
+"cpu.fair" = "Fair";
+"cpu.high" = "High";
+"cpu.critical" = "Critical";
+"cpu.unknown" = "Unknown";
+
+/* Disk Stats */
+"disk.details" = "Memory Details";
+"disk.processorLoad" = "Processor Load";
+"disk.diskUsage" = "Disk Usage";
+"disk.pressure" = "Pressure";
+"disk.swapUsed" = "Swap Used";
+"disk.cores" = "Cores";
+"disk.idle" = "Idle";
+"disk.usage" = "Usage";
+"disk.health" = "Health";
+"disk.excellent" = "Excellent";
+"disk.good" = "Good";
+"disk.fair" = "Fair";
+"disk.low" = "Low";
+"disk.systemJunk" = "System Junk";
+"disk.cleanableFound" = "Cleanable files found";
+"disk.notScanned" = "Not scanned yet";
+"disk.clean" = "Clean";
+"disk.topConsumers" = "Top Consumers";
+"disk.consumersDisclaimer" = "Partial data shown. Tap to open Activity Monitor.";
+"disk.quickActions" = "Quick Actions";
+"disk.findLargeFiles" = "Find Large Files";
+"disk.load" = "Load";
+"disk.of" = "of %@";
+
+/* Welcome */
+"welcome.title" = "Welcome to Mintify";
+"welcome.subtitle" = "Keep your Mac clean and fast";
+"welcome.oneMoreStep" = "One more step to get started";
+"welcome.storageCleaner" = "Storage Cleaner";
+"welcome.storageCleanerDesc" = "Scan and remove junk files, caches, and temporary data to free up disk space.";
+"welcome.duplicateFinder" = "Duplicate Finder";
+"welcome.duplicateFinderDesc" = "Find and remove duplicate files taking up valuable storage.";
+"welcome.systemMonitor" = "System Monitor";
+"welcome.systemMonitorDesc" = "Monitor CPU, memory, and disk usage in real-time from the menu bar.";
+"welcome.accessGranted" = "Access Granted!";
+"welcome.accessGrantedDesc" = "You're all set! Mintify can now scan your files.";
+"welcome.folderAccess" = "Folder Access Required";
+"welcome.folderAccessDesc" = "Mintify needs access to your Home folder to scan for junk files, duplicates, and more.";
+"welcome.grantAccess" = "Grant Access";
+"welcome.continue" = "Continue";
+"welcome.skipForNow" = "Skip for Now";
+"welcome.getStarted" = "Get Started";
+"welcome.done" = "Done";
+"welcome.filePickerInfo" = "A file picker will open. Select your Home folder and click Grant Access.";
+
+/* Alerts & Dialogs */
+"alert.cancel" = "Cancel";
+"alert.clean" = "Clean";
+"alert.remove" = "Remove";
+"alert.moveToTrash" = "Move to Trash";
+"alert.cleanConfirmTitle" = "Clean %@?";
+"alert.cleanConfirmMessage" = "This will permanently delete the selected cache files. This action cannot be undone.";
+"alert.deleteConfirmTitle" = "Move to Trash?";
+"alert.deleteConfirmMessage" = "Are you sure you want to move %d files (%@) to Trash?";
+"alert.removeConfirmTitle" = "Remove %d duplicates?";
+"alert.removeConfirmMessage" = "This will move %d duplicate files to Trash. Original files will be kept.";
+"alert.folderAccessRequired" = "Folder Access Required";
+"alert.folderAccessMessage" = "Mintify needs access to your Home folder to scan files. Would you like to grant access?";
+"alert.removeAppTitle" = "Remove Application";
+"alert.removeAppMessage" = "Are you sure you want to remove %@ and its leftovers? This will move them to Trash.";
+"alert.removeAppSandboxMessage" = "Leftover files will be moved to Trash. You will then be guided to manually delete the app from Finder.";
+
+/* Finder Instruction Sheet */
+"finder.leftoverRemoved" = "Leftover Files Removed";
+"finder.oneMoreStep" = "One more step to complete";
+"finder.sandboxExplain" = "Mintify runs in macOS App Sandbox for your security and privacy. This means we cannot directly delete apps in /Applications folder without requesting full disk access.";
+"finder.cleanedUp" = "We've cleaned up all leftover files. Please follow the steps below to complete the removal:";
+"finder.step1" = "Click 'Open in Finder' button below";
+"finder.step2" = "Right-click on the highlighted app";
+"finder.step3" = "Select 'Move to Trash'";
+"finder.close" = "Close";
+"finder.openInFinder" = "Open in Finder";
+
+/* File Type Categories */
+"fileType.all" = "All";
+"fileType.images" = "Images";
+"fileType.videos" = "Videos";
+"fileType.documents" = "Documents";
+"fileType.music" = "Music";
+"fileType.archives" = "Archives";
+"fileType.downloads" = "Downloads";
+"fileType.desktop" = "Desktop";
+"fileType.apps" = "Applications";
+"fileType.other" = "Other";
+
+/* Sort Options */
+"sort.sizeDesc" = "Size (Large → Small)";
+"sort.sizeAsc" = "Size (Small → Large)";
+"sort.dateDesc" = "Date (New → Old)";
+"sort.dateAsc" = "Date (Old → New)";
+"sort.name" = "Name";
+"sort.countDesc" = "Count (High → Low)";
+"sort.countAsc" = "Count (Low → High)";
+
+/* Common */
+"common.loading" = "Loading...";
+"common.error" = "Error";
+"common.success" = "Success";
+"common.failed" = "Failed";
+"common.revealInFinder" = "Reveal in Finder";
+"common.open" = "Open";
+"common.close" = "Close";
+"common.items" = "%d items";
+"common.moved" = "Moved %d items to Trash";
+"common.movedFailed" = "Moved %d items, %d failed";
+
+/* About */
+"about.title" = "About Mintify";
+"about.version" = "Version %@";
+"about.copyright" = "© 2024 Mintify. All rights reserved.";

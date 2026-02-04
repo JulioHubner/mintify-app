@@ -11,6 +11,7 @@
 		0E0BC4C91B360BDE73EC481E /* DeleteProgressOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07937B646A9E571FCA388D93 /* DeleteProgressOverlay.swift */; };
 		0E6A6965E8C2F3CA33A7D709 /* TimeInterval+Uptime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74121E110BC656FA7FC0475B /* TimeInterval+Uptime.swift */; };
 		1B9E045555839D3500C7350C /* LargeFilesScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A632FD622D1CB2E662A66B /* LargeFilesScanner.swift */; };
+		1ECEF4F2D0526841792C57F4 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199E9A62B1701422F6FC1538 /* LocalizationManager.swift */; };
 		25305A035541DBC6449FC0CA /* LargeFilesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86651E8AD6291FF6A1B6130 /* LargeFilesState.swift */; };
 		2B6B3B3B15450C507AE5AE0C /* LargeFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407AC50198F61CD8EC2AFCB /* LargeFile.swift */; };
 		2B8247501519686B5169A63D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12580B80BB73D27618175C0 /* SettingsView.swift */; };
@@ -39,6 +40,7 @@
 		8BB406457386551F2EA82AB5 /* SystemStatsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055FC92D975D0F2C01EBB845 /* SystemStatsHelper.swift */; };
 		8D95C43013C5F982EEAA89D2 /* OceanTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1041735D3D4F7DB43F524B6 /* OceanTheme.swift */; };
 		96DCD44DC80B2ECDBB25C16A /* DiskSpaceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C6F4ACD85B43318F75E43B /* DiskSpaceState.swift */; };
+		9E7A76DB87CEB1B2CCE22C2A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2CE85FC0BF77CB2B9F52EBF /* Localizable.strings */; };
 		9F1FE47393A9A62A641A2D39 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE6EB89F9C4D5E1F36D7BD /* CircularProgressView.swift */; };
 		A69A05443BEAA034657AB009 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2738CBCD3B724FD6215DB243 /* PermissionManager.swift */; };
 		A9926A643EE939ADE0B98072 /* CustomOverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3B43148BF4890A4937B31E /* CustomOverlayWindow.swift */; };
@@ -50,6 +52,8 @@
 		CB7AE86F2401981BF6C23FAE /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53392224C3E5C2A90124F58B /* MenuBarView.swift */; };
 		CD877567A3FC581D4F8F4CF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787DE022B68B0B3384C5447C /* ContentView.swift */; };
 		D27A4860C80BF830DDF47B2F /* CleanerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DC40C056AB52A9BE039E41 /* CleanerState.swift */; };
+		D83C52030D39443C0B6CC885 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B7EB230A370E27D8903D5B /* String+Localized.swift */; };
+		DA1605C300FE6E005304DCEF /* Bundle+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA1EBB1F9334B918E135CB /* Bundle+Language.swift */; };
 		E4C484D74DC2FFF5D63BB067 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068013A859E8B121FA0541E5 /* DarkTheme.swift */; };
 		E7D44AFA4622910CFE6013A8 /* MintifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E23247885A90045A363E4 /* MintifyApp.swift */; };
 		EBB7E5AFCA53E1252C9D13F8 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8468FBA79AA7AEEA033570 /* AppTheme.swift */; };
@@ -65,7 +69,10 @@
 		068013A859E8B121FA0541E5 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
 		07937B646A9E571FCA388D93 /* DeleteProgressOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProgressOverlay.swift; sourceTree = "<group>"; };
 		07DC40C056AB52A9BE039E41 /* CleanerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanerState.swift; sourceTree = "<group>"; };
+		07FA1EBB1F9334B918E135CB /* Bundle+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Language.swift"; sourceTree = "<group>"; };
 		0B0A63848698601B986D5BB3 /* CleanableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanableItem.swift; sourceTree = "<group>"; };
+		199E9A62B1701422F6FC1538 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
+		1E12F1B91A720DED558FA9CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		22DE025C890BD59835F2C8D8 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		22ED4AD29F729CB41EA9023F /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		2738CBCD3B724FD6215DB243 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
@@ -80,6 +87,7 @@
 		408602E079CDBEF76A93EC20 /* DuplicateFilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateFilesView.swift; sourceTree = "<group>"; };
 		41AC43FCF65C1DB10C2B9CCC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		449F14B069321C80DBE9320D /* Mintify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mintify.entitlements; sourceTree = "<group>"; };
+		51B7EB230A370E27D8903D5B /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
 		53392224C3E5C2A90124F58B /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		56E0C340C8740A42488895FA /* DuplicateScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateScanner.swift; sourceTree = "<group>"; };
 		619A29CCDD9999234D865914 /* AppUninstallerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUninstallerState.swift; sourceTree = "<group>"; };
@@ -109,6 +117,7 @@
 		D1041735D3D4F7DB43F524B6 /* OceanTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OceanTheme.swift; sourceTree = "<group>"; };
 		D8AE8C14A773319F40241590 /* AppThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppThemeProtocol.swift; sourceTree = "<group>"; };
 		E0036E920FDE268879EE1B52 /* CategoryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCardView.swift; sourceTree = "<group>"; };
+		E1C91485BB1590A00E143496 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E407AC50198F61CD8EC2AFCB /* LargeFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeFile.swift; sourceTree = "<group>"; };
 		E7B811656098B42D1D6DE616 /* LargeFilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeFilesView.swift; sourceTree = "<group>"; };
 		EE8468FBA79AA7AEEA033570 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -122,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				FCE5BFF863F4AF3352071D27 /* LaunchAtLoginHelper.swift */,
+				199E9A62B1701422F6FC1538 /* LocalizationManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -169,6 +179,8 @@
 		43D8C8200264B806AC276761 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				07FA1EBB1F9334B918E135CB /* Bundle+Language.swift */,
+				51B7EB230A370E27D8903D5B /* String+Localized.swift */,
 				74121E110BC656FA7FC0475B /* TimeInterval+Uptime.swift */,
 			);
 			path = Extensions;
@@ -308,6 +320,7 @@
 			children = (
 				41AC43FCF65C1DB10C2B9CCC /* Assets.xcassets */,
 				C58011B91CEDAEE361D47DEE /* Info.plist */,
+				A2CE85FC0BF77CB2B9F52EBF /* Localizable.strings */,
 				449F14B069321C80DBE9320D /* Mintify.entitlements */,
 				F41E23247885A90045A363E4 /* MintifyApp.swift */,
 				8374EA1B2AC0CF3B6656DBBE /* App */,
@@ -389,6 +402,7 @@
 			knownRegions = (
 				Base,
 				en,
+				vi,
 			);
 			mainGroup = EAD675D4CA0A17F185C7AA87;
 			minimizedProjectReferenceProxies = 1;
@@ -407,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FA1F0BD4A2A25FD5E488807 /* Assets.xcassets in Resources */,
+				9E7A76DB87CEB1B2CCE22C2A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +441,7 @@
 				C909935765A68A9B927845ED /* AppUninstallScanner.swift in Sources */,
 				EC2F42BF2F5848DAD17FE71C /* AppUninstallerState.swift in Sources */,
 				C4598D8E7B0D875937A64BF8 /* AppUninstallerView.swift in Sources */,
+				DA1605C300FE6E005304DCEF /* Bundle+Language.swift in Sources */,
 				65A9E0F01DE211D1AF965344 /* CategoryCardView.swift in Sources */,
 				9F1FE47393A9A62A641A2D39 /* CircularProgressView.swift in Sources */,
 				4270CC3B59E4D83A0968C2E3 /* CleanableItem.swift in Sources */,
@@ -449,6 +465,7 @@
 				ED1905DCA6C3387B6A328A46 /* LargeFilesView.swift in Sources */,
 				6F0AAB38DCA952C167324309 /* LaunchAtLoginHelper.swift in Sources */,
 				7D7C2C1512330864219C3107 /* LightTheme.swift in Sources */,
+				1ECEF4F2D0526841792C57F4 /* LocalizationManager.swift in Sources */,
 				71A1CCDB5C9FB31AB7434C4E /* MainContentView.swift in Sources */,
 				7159F9C1F219B677EA1E88A3 /* MainTab.swift in Sources */,
 				09EE65D3B13A8AFAABE48AFA /* MemoryOptimizerView.swift in Sources */,
@@ -461,6 +478,7 @@
 				66039F5130279AD53D68DF0E /* PrideTheme.swift in Sources */,
 				2B8247501519686B5169A63D /* SettingsView.swift in Sources */,
 				FC9A516136696D4463EFA2B3 /* StorageScanner.swift in Sources */,
+				D83C52030D39443C0B6CC885 /* String+Localized.swift in Sources */,
 				2ED8E07899C8FD051FEEE642 /* SunsetTheme.swift in Sources */,
 				8BB406457386551F2EA82AB5 /* SystemStatsHelper.swift in Sources */,
 				5B7C8D6FAA0457D9CFF932DC /* ThemeManager.swift in Sources */,
@@ -472,6 +490,18 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		A2CE85FC0BF77CB2B9F52EBF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1E12F1B91A720DED558FA9CF /* en */,
+				E1C91485BB1590A00E143496 /* vi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		21A4EE750D3664A27A0079AF /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -481,10 +511,12 @@
 				CODE_SIGN_ENTITLEMENTS = Mintify/Mintify.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Mintify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.Mintify;
 				SDKROOT = macosx;
 			};
@@ -524,7 +556,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -537,7 +568,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = Mintify;
@@ -556,10 +586,12 @@
 				CODE_SIGN_ENTITLEMENTS = Mintify/Mintify.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Mintify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.Mintify;
 				SDKROOT = macosx;
 			};
@@ -599,7 +631,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -618,7 +649,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;

@@ -178,11 +178,11 @@ class SystemStatsHelper {
         
         var thermalStateString: String {
             switch thermalState {
-            case .nominal: return "Normal"
-            case .fair: return "Fair"
-            case .serious: return "High"
-            case .critical: return "Critical"
-            @unknown default: return "Unknown"
+            case .nominal: return "cpu.normal".localized
+            case .fair: return "cpu.fair".localized
+            case .serious: return "cpu.high".localized
+            case .critical: return "cpu.critical".localized
+            @unknown default: return "cpu.unknown".localized
             }
         }
     }
@@ -527,6 +527,9 @@ class SystemStatsHelper {
             activePIDs.insert(pid)
             if pid <= 0 { continue }
             
+            // Skip Mintify itself to show other apps
+            if pid == getpid() { continue }
+            
             var name = "Unknown"
             var icon: NSImage?
             
@@ -546,7 +549,28 @@ class SystemStatsHelper {
             let result = libProc.proc_pidinfo(pid, PROC_PIDTASKINFO, 0, &taskInfo, taskInfoSize)
             
             if result == taskInfoSize {
-                let memory = Int64(taskInfo.pti_resident_size)
+                // Try to get phys_footprint (matches Activity Monitor) using task_info
+                // This is more accurate than pti_resident_size
+                var memory = Int64(taskInfo.pti_resident_size) // fallback
+                
+                // Try TASK_VM_INFO for phys_footprint (requires task port - may fail in sandbox)
+                var vmInfo = task_vm_info_data_t()
+                var vmInfoCount = mach_msg_type_number_t(MemoryLayout<task_vm_info_data_t>.size / MemoryLayout<natural_t>.size)
+                var taskPort: mach_port_t = 0
+                
+                // Try to get task port for this PID
+                let kr = task_for_pid(mach_task_self_, pid, &taskPort)
+                if kr == KERN_SUCCESS && taskPort != 0 {
+                    let vmResult = withUnsafeMutablePointer(to: &vmInfo) {
+                        $0.withMemoryRebound(to: integer_t.self, capacity: Int(vmInfoCount)) {
+                            task_info(taskPort, task_flavor_t(TASK_VM_INFO), $0, &vmInfoCount)
+                        }
+                    }
+                    if vmResult == KERN_SUCCESS {
+                        memory = Int64(vmInfo.phys_footprint)
+                    }
+                    mach_port_deallocate(mach_task_self_, taskPort)
+                }
                 
                 // CPU Calculation
                 let totalTime = taskInfo.pti_total_user + taskInfo.pti_total_system

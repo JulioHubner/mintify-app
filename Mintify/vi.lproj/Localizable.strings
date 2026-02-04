@@ -1,0 +1,351 @@
+/* Tab Names */
+"tab.cleaner" = "Dọn dẹp";
+"tab.largeFiles" = "File lớn";
+"tab.duplicates" = "File trùng";
+"tab.memory" = "Bộ nhớ";
+"tab.diskSpace" = "Ổ đĩa";
+"tab.uninstaller" = "Gỡ cài đặt";
+"tab.settings" = "Cài đặt";
+
+/* Settings */
+"settings.title" = "Cài đặt";
+"settings.general" = "Chung";
+"settings.appearance" = "Giao diện";
+"settings.permissions" = "Quyền truy cập";
+"settings.language" = "Ngôn ngữ";
+"settings.launchAtLogin" = "Khởi động cùng hệ thống";
+"settings.launchAtLoginDesc" = "Tự động mở Mintify khi đăng nhập";
+"settings.scanCategories" = "Danh mục quét";
+"settings.scanCategoriesDesc" = "Chọn thư mục để quét";
+"settings.selectAll" = "Chọn tất cả";
+"settings.deselectAll" = "Bỏ chọn tất cả";
+"settings.reset" = "Đặt lại";
+"settings.theme" = "Giao diện";
+"settings.themeDesc" = "Chọn giao diện ưa thích";
+"settings.chooseLanguage" = "Chọn ngôn ngữ";
+"settings.chooseLanguageDesc" = "Chọn ngôn ngữ hiển thị";
+"settings.restartNote" = "Một số thay đổi có thể cần mở lại cửa sổ để có hiệu lực.";
+
+/* Permissions */
+"permission.accessStatus" = "Trạng thái quyền truy cập";
+"permission.accessDesc" = "Mintify cần một số quyền để hoạt động";
+"permission.homeFolder" = "Truy cập thư mục Home";
+"permission.homeFolderDesc" = "Cần thiết để quét file";
+"permission.trash" = "Truy cập Trash";
+"permission.trashDesc" = "Cần thiết để quét Trash";
+"permission.granted" = "Đã cấp";
+"permission.grant" = "Cấp quyền";
+"permission.info" = "Nếu quyền không hoạt động, hãy cấp Full Disk Access trong System Settings → Privacy & Security.";
+
+/* Storage Cleaner */
+"cleaner.title" = "Dọn dẹp bộ nhớ";
+"cleaner.scanning" = "Đang quét...";
+"cleaner.scanNow" = "Quét ngay";
+"cleaner.scan" = "Quét";
+"cleaner.cleanNow" = "Dọn dẹp ngay";
+"cleaner.selectAll" = "Chọn tất cả";
+"cleaner.deselectAll" = "Bỏ chọn tất cả";
+"cleaner.selectedForCleanup" = "Đã chọn để dọn dẹp";
+"cleaner.lastScan" = "Lần quét cuối: %@";
+"cleaner.scanningDirectory" = "Đang quét thư mục:";
+"cleaner.areasToClean" = "Khu vực cần dọn dẹp";
+"cleaner.macintoshHD" = "Macintosh HD";
+"cleaner.systemReady" = "Hệ thống sẵn sàng để dọn dẹp.";
+"cleaner.free" = "Trống";
+"cleaner.total" = "Tổng";
+"cleaner.used" = "Đã dùng";
+"cleaner.cleaning" = "Đang dọn dẹp...";
+"cleaner.deleting" = "Đang xóa...";
+"cleaner.initializing" = "Đang khởi tạo...";
+"cleaner.stopScan" = "Dừng quét";
+"cleaner.showFiles" = "Xem file";
+
+/* Clean Categories */
+"category.userCaches" = "Cache ứng dụng";
+"category.userCachesDesc" = "Cache người dùng";
+"category.browserCaches" = "Cache trình duyệt";
+"category.browserCachesDesc" = "Safari, Chrome, Firefox cache";
+"category.logs" = "Nhật ký";
+"category.logsDesc" = "Nhật ký ứng dụng";
+"category.xcode" = "Xcode";
+"category.xcodeDesc" = "DerivedData & Device Support";
+"category.developerTools" = "Công cụ lập trình";
+"category.developerToolsDesc" = "NPM, Yarn, Gradle, CocoaPods";
+"category.trash" = "Trash";
+"category.trashDesc" = "File trong Trash";
+
+/* Large Files */
+"largeFiles.title" = "File lớn";
+"largeFiles.scan" = "Quét";
+"largeFiles.scanFiles" = "Quét file";
+"largeFiles.scanning" = "Đang quét...";
+"largeFiles.scanningForLargeFiles" = "Đang quét file lớn...";
+"largeFiles.stopScan" = "Dừng quét";
+"largeFiles.noLargeFilesFound" = "Không tìm thấy file lớn";
+"largeFiles.filesLargerThan" = "File lớn hơn %@ sẽ hiển thị ở đây";
+"largeFiles.minimumSize" = "Kích thước tối thiểu";
+"largeFiles.fileType" = "Loại file";
+"largeFiles.moveToTrash" = "Chuyển vào Trash";
+"largeFiles.movingToTrash" = "Đang chuyển vào Trash...";
+"largeFiles.selectedCount" = "%@ đã chọn";
+"largeFiles.fileCount" = "%@ file";
+"largeFiles.sort" = "Sắp xếp:";
+"largeFiles.filter" = "Lọc";
+"largeFiles.selectAll" = "Chọn tất cả";
+"largeFiles.scanNow" = "Quét ngay";
+"largeFiles.confirmDelete" = "Chuyển %@ file (%@) vào Trash?";
+"largeFiles.needsAccess" = "Mintify cần quyền truy cập thư mục Home để quét file lớn.";
+"largeFiles.grantAccess" = "Cấp quyền";
+"largeFiles.accessGranted" = "Đã cấp quyền truy cập thư mục Home";
+"largeFiles.selectHomeFolder" = "Chọn thư mục Home để cấp quyền cho Mintify quét file lớn";
+
+/* Duplicate Finder */
+"duplicates.title" = "Tìm file trùng";
+"duplicates.scan" = "Quét";
+"duplicates.scanning" = "Đang quét...";
+"duplicates.deleting" = "Đang xóa file...";
+"duplicates.stop" = "Dừng";
+"duplicates.findDuplicates" = "Tìm file trùng";
+"duplicates.clickToScan" = "Nhấn Quét để tìm file trùng";
+"duplicates.scanNow" = "Quét ngay";
+"duplicates.groupCount" = "%@ nhóm";
+"duplicates.fileType" = "Loại file";
+"duplicates.groups" = "%d nhóm";
+"duplicates.copies" = "%d bản sao";
+"duplicates.recoverable" = "%@ có thể khôi phục";
+"duplicates.autoSelect" = "Tự động chọn file trùng";
+"duplicates.removeSelected" = "Xóa đã chọn";
+"duplicates.removeConfirm" = "Xóa %@ file trùng?";
+"duplicates.removeMessage" = "Thao tác này sẽ chuyển %@ file trùng vào Trash. File gốc sẽ được giữ lại.";
+"duplicates.original" = "BẢN GỐC";
+"duplicates.accessGranted" = "Đã cấp quyền truy cập thư mục Home";
+"duplicates.needsAccess" = "Mintify cần quyền truy cập thư mục Home để tìm file trùng.";
+"duplicates.grantAccess" = "Cấp quyền";
+"duplicates.sort" = "Sắp xếp:";
+"duplicates.noDuplicates" = "Không tìm thấy file trùng";
+"duplicates.noDuplicatesDesc" = "Tuyệt vời! Không có file trùng lặp.";
+"duplicates.selectHomeFolder" = "Chọn thư mục Home để cấp quyền cho Mintify tìm file trùng";
+
+/* Duplicate Categories */
+"dupCategory.all" = "Tất cả";
+"dupCategory.images" = "Hình ảnh";
+"dupCategory.videos" = "Video";
+"dupCategory.audio" = "Âm thanh";
+"dupCategory.documents" = "Tài liệu";
+"dupCategory.music" = "Nhạc";
+"dupCategory.archives" = "Nén";
+"dupCategory.other" = "Khác";
+
+/* Memory Optimizer */
+"memory.title" = "Tối ưu bộ nhớ";
+"memory.freeUp" = "Giải phóng bộ nhớ";
+"memory.freeing" = "Đang giải phóng...";
+"memory.freed" = "Đã giải phóng %@";
+"memory.optimized" = "Bộ nhớ đã tối ưu";
+"memory.usedMemory" = "Bộ nhớ đã dùng";
+"memory.freeMemory" = "Bộ nhớ trống";
+"memory.totalMemory" = "Tổng bộ nhớ";
+"memory.breakdown" = "Chi tiết bộ nhớ";
+"memory.appMemory" = "Bộ nhớ ứng dụng";
+"memory.wired" = "Wired";
+"memory.compressed" = "Đã nén";
+"memory.pressure" = "Áp lực bộ nhớ";
+"memory.topConsumers" = "Tiến trình dùng nhiều";
+"memory.loadingProcesses" = "Đang tải tiến trình...";
+"memory.activityMonitor" = "Activity Monitor";
+"memory.used" = "Đã dùng";
+
+/* App Uninstaller */
+"uninstaller.title" = "Gỡ cài đặt ứng dụng";
+"uninstaller.scan" = "Quét";
+"uninstaller.scanning" = "Đang quét ứng dụng...";
+"uninstaller.findingApps" = "Đang tìm ứng dụng và tính kích thước";
+"uninstaller.completelyRemove" = "Xóa hoàn toàn ứng dụng và file còn sót lại.\nTìm cache, preferences, và support files ẩn.";
+"uninstaller.scanAll" = "Quét tất cả ứng dụng đã cài";
+"uninstaller.findLeftovers" = "Tìm file còn sót trong Library";
+"uninstaller.moveToTrash" = "Chuyển vào Trash để xóa an toàn";
+"uninstaller.searchApps" = "Tìm ứng dụng...";
+"uninstaller.apps" = "%d ứng dụng";
+"uninstaller.selectApp" = "Chọn một ứng dụng";
+"uninstaller.selectAppDesc" = "Chọn ứng dụng từ danh sách để xem chi tiết và file còn sót";
+"uninstaller.findingLeftovers" = "Đang tìm file còn sót...";
+"uninstaller.noLeftovers" = "Không tìm thấy file còn sót";
+"uninstaller.cleanInstall" = "Ứng dụng này được cài đặt sạch";
+"uninstaller.app" = "Ứng dụng";
+"uninstaller.leftovers" = "Còn sót";
+"uninstaller.total" = "Tổng";
+"uninstaller.removeApp" = "Xóa ứng dụng";
+"uninstaller.noBundleId" = "Không có bundle ID";
+"uninstaller.scanningDesc" = "Đang tìm ứng dụng đã cài đặt và tính toán kích thước";
+"uninstaller.desc" = "Xóa hoàn toàn ứng dụng và các file còn sót.\nTìm cache, preferences và file hỗ trợ ẩn.";
+"uninstaller.feature1" = "Quét tất cả ứng dụng đã cài";
+"uninstaller.feature2" = "Tìm file còn sót trong Library";
+"uninstaller.feature3" = "Chuyển vào Trash để xóa an toàn";
+"uninstaller.appCount" = "%@ ứng dụng";
+"uninstaller.appsProgress" = "%@ / %@ ứng dụng";
+"uninstaller.removeAppMessage" = "File còn sót sẽ được chuyển vào Trash. Sau đó bạn sẽ được hướng dẫn xóa ứng dụng thủ công từ Finder.";
+"uninstaller.removeConfirmMessage" = "Bạn có chắc muốn xóa %@ và các file còn sót? Chúng sẽ được chuyển vào Trash.";
+
+/* Disk Space */
+"disk.title" = "Dung lượng đĩa";
+"disk.analyzeYourDisk" = "Phân tích đĩa của bạn";
+"disk.scanDiskDesc" = "Quét đĩa để xem phần nào chiếm dung lượng.\nBao gồm hệ thống, dữ liệu người dùng và ứng dụng.";
+"disk.total" = "Tổng";
+"disk.spaceUsage" = "Dung lượng theo thư mục";
+"disk.noItems" = "Không có mục nào để hiển thị";
+"disk.permissionRequired" = "Một số thư mục có thể yêu cầu quyền truy cập";
+"disk.selectHomeFolder" = "Chọn thư mục Home để cấp quyền cho Mintify phân tích đĩa";
+
+/* Leftover Types */
+"leftover.caches" = "Cache";
+"leftover.preferences" = "Preferences";
+"leftover.applicationSupport" = "Application Support";
+"leftover.savedState" = "Saved State";
+"leftover.containers" = "Containers";
+"leftover.logs" = "Nhật ký";
+"leftover.other" = "Khác";
+
+/* Menu Bar */
+"menuBar.mintify" = "Mintify";
+"menuBar.macInfo" = "Thông tin Mac";
+"menuBar.model" = "Model";
+"menuBar.chip" = "Chip";
+"menuBar.macos" = "macOS";
+"menuBar.systemJunk" = "File rác hệ thống";
+"menuBar.cleanable" = "Có thể dọn";
+"menuBar.permission" = "Quyền";
+"menuBar.accessRequired" = "Cần cấp quyền";
+"menuBar.status" = "Trạng thái";
+"menuBar.readyToScan" = "Sẵn sàng quét";
+"menuBar.grantAccess" = "Cấp quyền";
+"menuBar.mintifyApp" = "Mở Mintify";
+"menuBar.openMenu" = "Mở Menu";
+"menuBar.about" = "Giới thiệu";
+"menuBar.quit" = "Thoát";
+"menuBar.ready" = "Sẵn sàng";
+"menuBar.stop" = "Dừng";
+"menuBar.settings" = "Cài đặt";
+
+/* Dashboard */
+"dashboard.storage" = "Bộ nhớ";
+"dashboard.memory" = "RAM";
+"dashboard.cpu" = "CPU";
+
+/* CPU Thermal States */
+"cpu.normal" = "Bình thường";
+"cpu.fair" = "Khá";
+"cpu.high" = "Cao";
+"cpu.critical" = "Nghiêm trọng";
+"cpu.unknown" = "Không xác định";
+
+/* Disk Stats */
+"disk.details" = "Chi tiết bộ nhớ";
+"disk.processorLoad" = "Tải CPU";
+"disk.diskUsage" = "Sử dụng ổ đĩa";
+"disk.pressure" = "Áp lực";
+"disk.swapUsed" = "Swap đã dùng";
+"disk.cores" = "Nhân";
+"disk.idle" = "Rảnh";
+"disk.usage" = "Sử dụng";
+"disk.health" = "Sức khỏe";
+"disk.excellent" = "Xuất sắc";
+"disk.good" = "Tốt";
+"disk.fair" = "Trung bình";
+"disk.low" = "Thấp";
+"disk.systemJunk" = "File rác hệ thống";
+"disk.cleanableFound" = "File có thể dọn";
+"disk.notScanned" = "Chưa quét";
+"disk.clean" = "Dọn dẹp";
+"disk.topConsumers" = "Tiến trình dùng nhiều";
+"disk.consumersDisclaimer" = "Dữ liệu không đầy đủ. Nhấn để mở Activity Monitor.";
+"disk.quickActions" = "Thao tác nhanh";
+"disk.findLargeFiles" = "Tìm file lớn";
+"disk.load" = "Tải";
+"disk.of" = "trên %@";
+
+/* Welcome */
+"welcome.title" = "Chào mừng đến với Mintify";
+"welcome.subtitle" = "Giữ Mac của bạn sạch và nhanh";
+"welcome.oneMoreStep" = "Thêm một bước để bắt đầu";
+"welcome.storageCleaner" = "Dọn dẹp bộ nhớ";
+"welcome.storageCleanerDesc" = "Quét và xóa file rác, cache, và dữ liệu tạm để giải phóng dung lượng.";
+"welcome.duplicateFinder" = "Tìm file trùng";
+"welcome.duplicateFinderDesc" = "Tìm và xóa file trùng lặp đang chiếm bộ nhớ.";
+"welcome.systemMonitor" = "Giám sát hệ thống";
+"welcome.systemMonitorDesc" = "Theo dõi CPU, bộ nhớ và ổ đĩa theo thời gian thực từ menu bar.";
+"welcome.accessGranted" = "Đã cấp quyền!";
+"welcome.accessGrantedDesc" = "Bạn đã sẵn sàng! Mintify có thể quét file của bạn.";
+"welcome.folderAccess" = "Cần quyền truy cập thư mục";
+"welcome.folderAccessDesc" = "Mintify cần quyền truy cập thư mục Home để quét file rác, file trùng, và hơn thế nữa.";
+"welcome.grantAccess" = "Cấp quyền";
+"welcome.continue" = "Tiếp tục";
+"welcome.skipForNow" = "Bỏ qua";
+"welcome.getStarted" = "Bắt đầu";
+"welcome.done" = "Xong";
+"welcome.filePickerInfo" = "Hộp thoại chọn file sẽ mở. Chọn thư mục Home và nhấn Cấp quyền.";
+
+/* Alerts & Dialogs */
+"alert.cancel" = "Hủy";
+"alert.clean" = "Dọn dẹp";
+"alert.remove" = "Xóa";
+"alert.moveToTrash" = "Chuyển vào Trash";
+"alert.cleanConfirmTitle" = "Dọn %@?";
+"alert.cleanConfirmMessage" = "Thao tác này sẽ xóa vĩnh viễn các file cache đã chọn. Không thể hoàn tác.";
+"alert.deleteConfirmTitle" = "Chuyển vào Trash?";
+"alert.deleteConfirmMessage" = "Bạn có chắc muốn chuyển %d file (%@) vào Trash?";
+"alert.removeConfirmTitle" = "Xóa %d file trùng?";
+"alert.removeConfirmMessage" = "Thao tác này sẽ chuyển %d file trùng vào Trash. File gốc sẽ được giữ lại.";
+"alert.folderAccessRequired" = "Cần quyền truy cập thư mục";
+"alert.folderAccessMessage" = "Mintify cần quyền truy cập thư mục Home để quét file. Bạn có muốn cấp quyền không?";
+"alert.removeAppTitle" = "Xóa ứng dụng";
+"alert.removeAppMessage" = "Bạn có chắc muốn xóa %@ và các file còn sót? Sẽ chuyển vào Trash.";
+"alert.removeAppSandboxMessage" = "File còn sót sẽ được chuyển vào Trash. Sau đó bạn sẽ được hướng dẫn xóa ứng dụng thủ công từ Finder.";
+
+/* Finder Instruction Sheet */
+"finder.leftoverRemoved" = "Đã xóa file còn sót";
+"finder.oneMoreStep" = "Thêm một bước để hoàn tất";
+"finder.sandboxExplain" = "Mintify chạy trong macOS App Sandbox để bảo mật và quyền riêng tư của bạn. Điều này có nghĩa là chúng tôi không thể xóa trực tiếp ứng dụng trong thư mục /Applications mà không yêu cầu full disk access.";
+"finder.cleanedUp" = "Chúng tôi đã dọn dẹp tất cả file còn sót. Vui lòng làm theo các bước dưới đây để hoàn tất:";
+"finder.step1" = "Nhấn nút 'Mở trong Finder' bên dưới";
+"finder.step2" = "Nhấp chuột phải vào ứng dụng được đánh dấu";
+"finder.step3" = "Chọn 'Chuyển vào Trash'";
+"finder.close" = "Đóng";
+"finder.openInFinder" = "Mở trong Finder";
+
+/* File Type Categories */
+"fileType.all" = "Tất cả";
+"fileType.images" = "Hình ảnh";
+"fileType.videos" = "Video";
+"fileType.documents" = "Tài liệu";
+"fileType.music" = "Nhạc";
+"fileType.archives" = "Nén";
+"fileType.downloads" = "Tải xuống";
+"fileType.desktop" = "Desktop";
+"fileType.apps" = "Ứng dụng";
+"fileType.other" = "Khác";
+
+/* Sort Options */
+"sort.sizeDesc" = "Kích thước (Lớn → Nhỏ)";
+"sort.sizeAsc" = "Kích thước (Nhỏ → Lớn)";
+"sort.dateDesc" = "Ngày (Mới → Cũ)";
+"sort.dateAsc" = "Ngày (Cũ → Mới)";
+"sort.name" = "Tên";
+"sort.countDesc" = "Số lượng (Nhiều → Ít)";
+"sort.countAsc" = "Số lượng (Ít → Nhiều)";
+
+/* Common */
+"common.loading" = "Đang tải...";
+"common.error" = "Lỗi";
+"common.success" = "Thành công";
+"common.failed" = "Thất bại";
+"common.revealInFinder" = "Hiện trong Finder";
+"common.open" = "Mở";
+"common.close" = "Đóng";
+"common.items" = "%d mục";
+"common.moved" = "Đã chuyển %d mục vào Trash";
+"common.movedFailed" = "Đã chuyển %d mục, %d thất bại";
+
+/* About */
+"about.title" = "Giới thiệu Mintify";
+"about.version" = "Phiên bản %@";
+"about.copyright" = "© 2024 Mintify. Bảo lưu mọi quyền.";

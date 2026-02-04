@@ -80,7 +80,7 @@ struct DiskVisualizerView: View {
                 .foregroundStyle(AppTheme.storageGradient)
                 .font(.title2)
             
-            Text("Disk Space")
+            Text("disk.title".localized)
                 .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundColor(AppTheme.textPrimary)
             
@@ -94,7 +94,7 @@ struct DiskVisualizerView: View {
                 }) {
                     HStack(spacing: 6) {
                         Image(systemName: "arrow.clockwise")
-                        Text("Scan")
+                        Text("cleaner.scan".localized)
                     }
                     .font(.system(size: 13, weight: .medium))
                     .foregroundColor(AppTheme.textPrimary)
@@ -130,11 +130,11 @@ struct DiskVisualizerView: View {
             
             // Title and Description
             VStack(spacing: 12) {
-                Text("Analyze Your Disk")
+                Text("disk.analyzeYourDisk".localized)
                     .font(.system(size: 24, weight: .bold))
                     .foregroundColor(AppTheme.textPrimary)
                 
-                Text("Scan your disk to see what's taking up space.\nIncludes system, user data, and applications.")
+                Text("disk.scanDiskDesc".localized)
                     .font(.system(size: 14))
                     .foregroundColor(AppTheme.textSecondary)
                     .multilineTextAlignment(.center)
@@ -144,7 +144,7 @@ struct DiskVisualizerView: View {
             // Storage Overview (always accessible)
             HStack(spacing: 24) {
                 VStack(spacing: 4) {
-                    Text("Total")
+                    Text("disk.total".localized)
                         .font(.system(size: 12))
                         .foregroundColor(AppTheme.textSecondary)
                     Text(ByteCountFormatter.string(fromByteCount: state.storageOverview.total, countStyle: .file))
@@ -156,7 +156,7 @@ struct DiskVisualizerView: View {
                     .frame(height: 40)
                 
                 VStack(spacing: 4) {
-                    Text("Used")
+                    Text("cleaner.used".localized)
                         .font(.system(size: 12))
                         .foregroundColor(AppTheme.textSecondary)
                     Text(ByteCountFormatter.string(fromByteCount: state.storageOverview.used, countStyle: .file))
@@ -168,7 +168,7 @@ struct DiskVisualizerView: View {
                     .frame(height: 40)
 
                 VStack(spacing: 4) {
-                    Text("Free")
+                    Text("cleaner.free".localized)
                         .font(.system(size: 12))
                         .foregroundColor(AppTheme.textSecondary)
                     Text(ByteCountFormatter.string(fromByteCount: state.storageOverview.free, countStyle: .file))
@@ -218,7 +218,7 @@ struct DiskVisualizerView: View {
                     .foregroundStyle(AppTheme.storageGradient)
                     .font(.system(size: 16))
                 
-                Text("Macintosh HD")
+                Text("cleaner.macintoshHD".localized)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
                 
@@ -317,7 +317,7 @@ struct DiskVisualizerView: View {
     
     private var diskItemsSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(state.currentPath.isEmpty ? "Space Usage by Folder" : state.currentPath.last?.name ?? "")
+            Text(state.currentPath.isEmpty ? "disk.spaceUsage".localized : state.currentPath.last?.name ?? "")
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundColor(AppTheme.textPrimary)
             
@@ -362,11 +362,11 @@ struct DiskVisualizerView: View {
                 .font(.system(size: 40))
                 .foregroundColor(AppTheme.textSecondary)
             
-            Text("No items to display")
+            Text("disk.noItems".localized)
                 .font(.system(size: 14))
                 .foregroundColor(AppTheme.textSecondary)
             
-            Text("Some folders may require permission to access")
+            Text("disk.permissionRequired".localized)
                 .font(.system(size: 12))
                 .foregroundColor(AppTheme.textSecondary.opacity(0.7))
         }
@@ -388,8 +388,8 @@ struct DiskVisualizerView: View {
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
         panel.allowsMultipleSelection = false
-        panel.message = "Select your Home folder to grant Mintify access for disk analysis"
-        panel.prompt = "Grant Access"
+        panel.message = "disk.selectHomeFolder".localized
+        panel.prompt = "welcome.grantAccess".localized
         
         // Try to start at home directory
         if let homeURL = URL(string: "file://\(state.scanner.getHomeDirectoryPath())") {

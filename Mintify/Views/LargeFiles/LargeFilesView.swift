@@ -8,9 +8,11 @@ enum SizeUnit: String, CaseIterable {
 struct LargeFilesView: View {
     @EnvironmentObject var appState: CleanerState
     @EnvironmentObject var state: LargeFilesState
+    @EnvironmentObject var permissionManager: PermissionManager
     @ObservedObject var themeManager = ThemeManager.shared
     @State private var showConfirmDelete = false
     @State private var isDeleting = false
+    @State private var isRequestingPermission = false
     @State private var deleteProgress: (current: Int, total: Int) = (0, 0)
     
     // Computed properties wrapping state for convenience
@@ -93,19 +95,19 @@ struct LargeFilesView: View {
             // Footer
             footerView
         }
-        .alert("Move to Trash?", isPresented: $showConfirmDelete) {
-            Button("Cancel", role: .cancel) { }
-            Button("Move to Trash", role: .destructive) {
+        .alert("largeFiles.moveToTrash".localized, isPresented: $showConfirmDelete) {
+            Button("alert.cancel".localized, role: .cancel) { }
+            Button("largeFiles.moveToTrash".localized, role: .destructive) {
                 deleteSelectedFiles()
             }
         } message: {
-            Text("Are you sure you want to move \(selectedFiles.count) files (\(ByteCountFormatter.string(fromByteCount: selectedSize, countStyle: .file))) to Trash?")
+            Text("largeFiles.confirmDelete".localized(String(selectedFiles.count), ByteCountFormatter.string(fromByteCount: selectedSize, countStyle: .file)))
         }
         // Delete progress overlay
         .overlay {
             if isDeleting {
                 DeleteProgressOverlay(
-                    message: "Moving to Trash...",
+                    message: "largeFiles.movingToTrash".localized,
                     current: deleteProgress.current,
                     total: deleteProgress.total
                 )
@@ -122,7 +124,7 @@ struct LargeFilesView: View {
                 .font(.title2)
             
             // Title
-            Text("Large Files")
+            Text("largeFiles.title".localized)
                 .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundColor(AppTheme.textPrimary)
             
@@ -133,7 +135,7 @@ struct LargeFilesView: View {
                 ForEach(FileSortOption.allCases) { option in
                     Button(action: { state.sortOption = option }) {
                         HStack {
-                            Text(option.rawValue)
+                            Text(option.localizedName)
                             if state.sortOption == option {
                                 Image(systemName: "checkmark")
                             }
@@ -142,9 +144,9 @@ struct LargeFilesView: View {
                 }
             } label: {
                 HStack(spacing: 4) {
-                    Text("Sort:")
+                    Text("largeFiles.sort".localized)
                         .foregroundColor(AppTheme.textSecondary)
-                    Text(state.sortOption.rawValue)
+                    Text(state.sortOption.localizedName)
                         .foregroundColor(AppTheme.textPrimary)
                     Image(systemName: "chevron.down")
                         .font(.system(size: 10))
@@ -161,7 +163,7 @@ struct LargeFilesView: View {
             .buttonStyle(.plain)
             
             // File count
-            Text("\(filteredFiles.count) files")
+            Text("largeFiles.fileCount".localized(String(filteredFiles.count)))
                 .font(.system(size: 12))
                 .foregroundColor(AppTheme.textSecondary)
             
@@ -169,7 +171,7 @@ struct LargeFilesView: View {
             Button(action: startScan) {
                 HStack(spacing: 6) {
                     Image(systemName: state.isScanning ? "stop.fill" : "arrow.clockwise")
-                    Text(state.isScanning ? "Scanning..." : "Scan")
+                    Text(state.isScanning ? "largeFiles.scanning".localized : "largeFiles.scan".localized)
                 }
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(AppTheme.textPrimary)
@@ -193,7 +195,7 @@ struct LargeFilesView: View {
         VStack(alignment: .leading, spacing: 16) {
             // Size Filter with Input
             VStack(alignment: .leading, spacing: 10) {
-                Text("Minimum Size")
+                Text("largeFiles.minimumSize".localized)
                 .font(.system(size: 11, weight: .medium))
                 .foregroundColor(AppTheme.textSecondary)
                 .textCase(.uppercase)
@@ -270,7 +272,7 @@ struct LargeFilesView: View {
                 Button(action: startScan) {
                     HStack {
                         Image(systemName: "magnifyingglass")
-                        Text("Scan Files")
+                        Text("largeFiles.scanFiles".localized)
                     }
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(AppTheme.textPrimary)
@@ -289,7 +291,7 @@ struct LargeFilesView: View {
             
             // Category Filter
             VStack(alignment: .leading, spacing: 8) {
-                Text("File Type")
+                Text("largeFiles.fileType".localized)
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(AppTheme.textSecondary)
                     .textCase(.uppercase)
@@ -302,7 +304,7 @@ struct LargeFilesView: View {
                             Image(systemName: category.icon)
                                 .font(.system(size: 11))
                                 .frame(width: 16)
-                            Text(category.rawValue)
+                            Text(category.localizedName)
                                 .font(.system(size: 12))
                             Spacer()
                             
@@ -364,19 +366,19 @@ struct LargeFilesView: View {
                 .controlSize(.large)
                 .tint(.mint)
             
-            Text("Scanning for large files...")
-                .font(.headline)
+            Text("largeFiles.scanningForLargeFiles".localized)
+                .font(.system(size: 24, weight: .bold))
                 .foregroundColor(AppTheme.textPrimary)
             
             Text(state.scanProgress)
-                .font(.caption)
+                .font(.system(size: 14))
                 .foregroundColor(AppTheme.textSecondary)
             
             // Stop button
             Button(action: stopScan) {
                 HStack(spacing: 6) {
                     Image(systemName: "stop.fill")
-                    Text("Stop Scan")
+                    Text("largeFiles.stopScan".localized)
                 }
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(AppTheme.textPrimary)
@@ -402,18 +404,18 @@ struct LargeFilesView: View {
                 .font(.system(size: 48))
                 .foregroundColor(AppTheme.textSecondary)
             
-            Text("No large files found")
-                .font(.headline)
-                .foregroundColor(AppTheme.textSecondary)
+            Text("largeFiles.noLargeFilesFound".localized)
+                .font(.system(size: 24, weight: .bold))
+                .foregroundColor(AppTheme.textPrimary)
             
-            Text("Files larger than \(formattedMinSize) will appear here")
-                .font(.caption)
+            Text("largeFiles.filesLargerThan".localized(formattedMinSize))
+                .font(.system(size: 14))
                 .foregroundColor(AppTheme.textSecondary)
             
             Button(action: startScan) {
                 HStack {
                     Image(systemName: "magnifyingglass")
-                    Text("Scan Now")
+                    Text("largeFiles.scanNow".localized)
                 }
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(AppTheme.textPrimary)
@@ -425,6 +427,53 @@ struct LargeFilesView: View {
                 )
             }
             .buttonStyle(.plain)
+            
+            // Permission status section
+            VStack(spacing: 8) {
+                if !permissionManager.hasHomeAccess {
+                    Text("largeFiles.needsAccess".localized)
+                        .font(.caption2)
+                        .foregroundColor(AppTheme.textSecondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                    
+                    Button(action: {
+                        requestPermissionAndScan()
+                    }) {
+                        HStack {
+                            if isRequestingPermission {
+                                ProgressView()
+                                    .controlSize(.small)
+                                    .scaleEffect(0.7)
+                            }
+                            Text("largeFiles.grantAccess".localized)
+                        }
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(AppTheme.textPrimary)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 6)
+                        .background(
+                            Capsule()
+                                .fill(Color.orange.opacity(0.8))
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.top, 4)
+                } else {
+                    Text("largeFiles.accessGranted".localized)
+                        .font(.caption2)
+                        .foregroundColor(.green.opacity(0.7))
+                    
+                    HStack(spacing: 16) {
+                        Label("Desktop", systemImage: "desktopcomputer")
+                        Label("Downloads", systemImage: "arrow.down.circle")
+                        Label("Documents", systemImage: "doc.text")
+                    }
+                    .font(.caption)
+                    .foregroundColor(AppTheme.textSecondary)
+                }
+            }
+            .padding(.top, 20)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -438,7 +487,7 @@ struct LargeFilesView: View {
                 HStack(spacing: 6) {
                     Image(systemName: state.selectedPaths.count == state.files.count && !state.files.isEmpty ? "checkmark.square.fill" : "square")
                         .foregroundColor(.mint)
-                    Text("Select All")
+                    Text("largeFiles.selectAll".localized)
                         .foregroundColor(AppTheme.textSecondary)
                 }
                 .font(.system(size: 12))
@@ -453,7 +502,7 @@ struct LargeFilesView: View {
             
             // Selected info
             if !selectedFiles.isEmpty {
-                Text("\(selectedFiles.count) selected")
+                Text("largeFiles.selectedCount".localized(String(selectedFiles.count)))
                     .font(.system(size: 12))
                     .foregroundColor(AppTheme.textSecondary)
                 
@@ -469,7 +518,7 @@ struct LargeFilesView: View {
             Button(action: { showConfirmDelete = true }) {
                 HStack(spacing: 6) {
                     Image(systemName: "trash.fill")
-                    Text("Move to Trash")
+                    Text("largeFiles.moveToTrash".localized)
                 }
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(AppTheme.textPrimary)
@@ -490,6 +539,68 @@ struct LargeFilesView: View {
     // MARK: - Actions
     
     private func startScan() {
+        // Check permission first, if not granted, request it
+        if !permissionManager.hasHomeAccess {
+            requestPermissionAndScan()
+            return
+        }
+        
+        performScan()
+    }
+    
+    private func requestPermissionAndScan() {
+        // Store reference to the main window BEFORE showing panel
+        let mainWindow = NSApp.keyWindow ?? NSApp.windows.first(where: { $0.isVisible && $0.canBecomeKey })
+        
+        // Activate app first to prevent window from hiding
+        NSApp.activate(ignoringOtherApps: true)
+        
+        // Use NSOpenPanel to request folder access (like DiskVisualizerView)
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.allowsMultipleSelection = false
+        panel.message = "largeFiles.selectHomeFolder".localized
+        panel.prompt = "welcome.grantAccess".localized
+        
+        // Try to start at home directory
+        panel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
+        
+        isRequestingPermission = true
+        
+        // Use beginSheetModal if we have a window, otherwise use begin
+        if let window = mainWindow {
+            panel.beginSheetModal(for: window) { [self] response in
+                isRequestingPermission = false
+                if response == .OK, let url = panel.url {
+                    // Save bookmark for future use
+                    permissionManager.saveHomeBookmark(for: url)
+                }
+                // Start scan regardless (we'll show what we can access)
+                performScan()
+            }
+        } else {
+            panel.begin { [self] response in
+                // Re-activate app after panel closes to restore window focus
+                DispatchQueue.main.async {
+                    NSApp.activate(ignoringOtherApps: true)
+                    if let window = mainWindow {
+                        window.makeKeyAndOrderFront(nil)
+                    }
+                }
+                
+                isRequestingPermission = false
+                if response == .OK, let url = panel.url {
+                    // Save bookmark for future use
+                    permissionManager.saveHomeBookmark(for: url)
+                }
+                // Start scan regardless
+                performScan()
+            }
+        }
+    }
+    
+    private func performScan() {
         state.isScanning = true
         state.shouldStopScan = false
         state.files = []
@@ -512,6 +623,19 @@ struct LargeFilesView: View {
                 }
                 state.isScanning = false
                 state.scanProgress = ""
+                
+                // Restore window focus after scan (TCC dialogs may have hidden the window)
+                self.restoreWindowFocus()
+            }
+        }
+    }
+    
+    /// Restore window focus after TCC permission dialogs may have hidden it
+    private func restoreWindowFocus() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            NSApp.activate(ignoringOtherApps: true)
+            if let window = NSApp.windows.first(where: { $0.isVisible && $0.canBecomeKey }) {
+                window.makeKeyAndOrderFront(nil)
             }
         }
     }

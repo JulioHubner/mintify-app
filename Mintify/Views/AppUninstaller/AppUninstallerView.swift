@@ -52,17 +52,17 @@ struct AppUninstallerView: View {
         .onChange(of: state.searchText) { _, newValue in
             state.filterApps(newValue)
         }
-        .alert("Remove Application", isPresented: $showRemoveConfirm) {
-            Button("Cancel", role: .cancel) {}
-            Button("Remove", role: .destructive) {
+        .alert("uninstaller.removeApp".localized, isPresented: $showRemoveConfirm) {
+            Button("alert.cancel".localized, role: .cancel) {}
+            Button("alert.remove".localized, role: .destructive) {
                 removeSelectedApp()
             }
         } message: {
             if let app = state.selectedApp {
                 if app.path.hasPrefix("/Applications") {
-                    Text("Leftover files will be moved to Trash. You will then be guided to manually delete the app from Finder.")
+                    Text("uninstaller.removeAppMessage".localized)
                 } else {
-                    Text("Are you sure you want to remove \(app.name) and its leftovers? This will move them to Trash.")
+                    Text("uninstaller.removeConfirmMessage".localized(app.name))
                 }
             }
         }
@@ -79,7 +79,7 @@ struct AppUninstallerView: View {
                 .foregroundStyle(AppTheme.cleanPink)
                 .font(.title2)
             
-            Text("App Uninstaller")
+            Text("uninstaller.title".localized)
                 .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundColor(AppTheme.textPrimary)
             
@@ -90,7 +90,7 @@ struct AppUninstallerView: View {
                 Button(action: loadApps) {
                     HStack(spacing: 6) {
                         Image(systemName: "arrow.clockwise")
-                        Text("Scan")
+                        Text("cleaner.scan".localized)
                     }
                     .font(.system(size: 13, weight: .medium))
                     .foregroundColor(AppTheme.textPrimary)
@@ -126,11 +126,11 @@ struct AppUninstallerView: View {
             
             // Title and Description
             VStack(spacing: 12) {
-                Text(state.isScanning ? "Scanning Applications..." : "App Uninstaller")
+                Text(state.isScanning ? "uninstaller.scanning".localized : "uninstaller.title".localized)
                     .font(.system(size: 24, weight: .bold))
                     .foregroundColor(AppTheme.textPrimary)
                 
-                Text(state.isScanning ? "Finding installed applications and calculating sizes" : "Completely remove apps and their leftover files.\nFind hidden cache, preferences, and support files.")
+                Text(state.isScanning ? "uninstaller.scanningDesc".localized : "uninstaller.desc".localized)
                     .font(.system(size: 14))
                     .foregroundColor(AppTheme.textSecondary)
                     .multilineTextAlignment(.center)
@@ -140,9 +140,9 @@ struct AppUninstallerView: View {
             if !state.isScanning {
                 // Features
                 VStack(alignment: .leading, spacing: 12) {
-                    FeatureRow(icon: "app.badge.checkmark", text: "Scan all installed applications")
-                    FeatureRow(icon: "magnifyingglass", text: "Find leftover files in Library")
-                    FeatureRow(icon: "trash", text: "Move to Trash for safe removal")
+                    FeatureRow(icon: "app.badge.checkmark", text: "uninstaller.feature1".localized)
+                    FeatureRow(icon: "magnifyingglass", text: "uninstaller.feature2".localized)
+                    FeatureRow(icon: "trash", text: "uninstaller.feature3".localized)
                 }
                 .padding(.vertical, 16)
                 .padding(.horizontal, 24)
@@ -196,7 +196,7 @@ struct AppUninstallerView: View {
                         
                         // Progress text
                         if state.scanTotal > 0 {
-                            Text("\(state.scanProgress) / \(state.scanTotal) apps")
+                            Text("uninstaller.appsProgress".localized("\(state.scanProgress)", "\(state.scanTotal)"))
                                 .font(.system(size: 11))
                                 .foregroundColor(AppTheme.textSecondary)
                         }
@@ -220,7 +220,7 @@ struct AppUninstallerView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(AppTheme.textSecondary)
                 
-                TextField("Search apps...", text: $state.searchText)
+                TextField("uninstaller.searchApps".localized, text: $state.searchText)
                     .textFieldStyle(.plain)
                     .foregroundColor(AppTheme.textPrimary)
                 
@@ -237,7 +237,7 @@ struct AppUninstallerView: View {
             
             // App Count and Loading
             HStack {
-                Text("\(state.filteredApps.count) apps")
+                Text("uninstaller.appCount".localized(String(state.filteredApps.count)))
                     .font(.system(size: 12))
                     .foregroundColor(AppTheme.textSecondary)
                 
@@ -317,7 +317,7 @@ struct AppUninstallerView: View {
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
                 
-                Text(app.bundleIdentifier ?? "No bundle ID")
+                Text(app.bundleIdentifier ?? "uninstaller.noBundleId".localized)
                     .font(.system(size: 12))
                     .foregroundColor(AppTheme.textSecondary)
                 
@@ -350,7 +350,7 @@ struct AppUninstallerView: View {
         VStack(spacing: 12) {
             ProgressView()
                 .controlSize(.regular)
-            Text("Finding leftovers...")
+            Text("uninstaller.findingLeftovers".localized)
                 .font(.system(size: 13))
                 .foregroundColor(AppTheme.textSecondary)
         }
@@ -362,10 +362,10 @@ struct AppUninstallerView: View {
             Image(systemName: "checkmark.circle")
                 .font(.system(size: 40))
                 .foregroundColor(.green)
-            Text("No leftovers found")
+            Text("uninstaller.noLeftovers".localized)
                 .font(.system(size: 14))
                 .foregroundColor(AppTheme.textSecondary)
-            Text("This app appears to be cleanly installed")
+            Text("uninstaller.cleanInstall".localized)
                 .font(.system(size: 12))
                 .foregroundColor(AppTheme.textSecondary.opacity(0.7))
         }
@@ -395,7 +395,7 @@ struct AppUninstallerView: View {
             }) {
                 HStack(spacing: 8) {
                     Image(systemName: "trash")
-                    Text("Move to Trash")
+                    Text("uninstaller.moveToTrash".localized)
                 }
                 .font(.system(size: 14, weight: .semibold))
                 .foregroundColor(AppTheme.textPrimary)

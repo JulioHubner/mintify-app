@@ -1,318 +1,79 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/macOS-14.0+-000000?style=for-the-badge&logo=apple&logoColor=white">
-  <img alt="macOS 14.0+" src="https://img.shields.io/badge/macOS-14.0+-000000?style=for-the-badge&logo=apple&logoColor=white">
-</picture>
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Swift-5.9-FA7343?style=for-the-badge&logo=swift&logoColor=white">
-  <img alt="Swift 5.9" src="https://img.shields.io/badge/Swift-5.9-FA7343?style=for-the-badge&logo=swift&logoColor=white">
-</picture>
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge">
-  <img alt="MIT License" src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge">
-</picture>
+# ✨ mintify-app - Clean Up Your Mac Easily
 
-# ✨ Mintify
-
-A modern, beautiful macOS storage cleaner and system optimizer. Keep your Mac clean and running smoothly with an intuitive interface.
-
-<table>
-<tr>
-<td width="31.4%" align="center">
-  <img src="docs/assets/menubar-placeholder.png" alt="Menu Bar" width="100%">
-</td>
-<td width="68.4%" align="center">
-  <img src="docs/assets/screenshot-placeholder.png" alt="Mintify Screenshot" width="100%">
-</td>
-</tr>
-</table>
+## 🚀 Getting Started
 
-### 🔒 Privacy-First Design
-
-> **Sandbox Protected** — Mintify runs in Apple's App Sandbox. No full disk access required.  
-> Permissions are requested **only when needed** for specific folders you want to scan.
-
-- ✅ No tracking, no analytics, no data collection
-- ✅ Scans only where you allow
-- ✅ Open source — verify the code yourself
-
-### 💡 Why Mintify?
-
-| Feature | Mintify | CleanMyMac X |
-|---------|:-------:|:------------:|
-| **Price** | 🆓 Free | $34.95/year |
-| **Open Source** | ✅ Yes | ❌ No |
-| **App Size** | 📦 ~3.4 MB | 📦 ~300 MB |
-| **Sandbox** | ✅ Protected | ❌ Full Disk Access |
-| **Tracking** | ❌ None | ⚠️ Analytics |
-| **Native SwiftUI** | ✅ Yes | ❌ AppKit |
-| **Menu Bar Mode** | ✅ Lightweight | ⚠️ Heavy |
-
----
-
-## Features
-
-### 🧹 Storage Cleaner
-**Intelligent junk file detection** across 6 categories:
-- User & Browser caches (Safari, Chrome, Firefox)
-- System logs & crash reports
-- Xcode DerivedData, Archives, Device Support
-- Developer tools (npm, yarn, pip, CocoaPods, Homebrew)
-
-*Real-time scanning progress with per-folder breakdown*
-
----
-
-### 📁 Large Files Finder
-**Customizable threshold scanning** to identify space hogs:
-- Filter by size (100MB, 500MB, 1GB, custom)
-- Sort by size, name, or modification date
-- Category filtering (images, videos, archives, etc.)
-
-*Uses `FileManager` with efficient directory enumeration*
-
----
-
-### 📋 Duplicate Finder
-**Content-based detection** using MD5 hashing:
-- Size-first filtering for performance
-- Group duplicates by content hash
-- Smart selection (keep original, remove copies)
-
-*Handles large files efficiently with streaming hash*
-
----
-
-### 📊 Disk Space Visualizer
-**Interactive treemap** of disk usage:
-- Drill-down navigation by folder
-- Visual size representation
-- System vs. user data breakdown
-
-*Uses `URLResourceKey` for accurate size calculation*
-
----
-
-### 🧠 Memory Optimizer
-**Real-time system monitoring** via Mach APIs:
-- Memory pressure & usage stats
-- CPU usage per core
-- Top processes by memory consumption
-
-*Native `host_statistics64` for accurate metrics*
-
----
-
-### 🗑️ App Uninstaller
-**Complete removal** including leftovers:
-- Application Support files
-- Preferences (plist), Caches, Saved States
-- Reveal in Finder before deletion
-
-*Scans `/Applications` and `~/Applications`*
-
-### 📌 Menu Bar Integration
-Lightweight **menu bar accessory** with quick access popover:
-- System stats at a glance (CPU, RAM, Storage)
-- One-click scan trigger
-- Opens full app on demand, hides to menu bar when closed
-
-*Built with `NSStatusItem` + SwiftUI `NSHostingController`*
-
-### 📊 Feature Workflows
-
-<details>
-<summary><b>🧹 Storage Cleaner Flow</b></summary>
-
-```mermaid
-flowchart LR
-    A[Start Scan] --> B{Request Permission}
-    B -->|Granted| C[Scan Categories]
-    B -->|Denied| D[Skip Folder]
-    C --> E[User Caches]
-    C --> F[Browser Caches]
-    C --> G[Logs]
-    C --> H[Xcode]
-    C --> I[Dev Tools]
-    E & F & G & H & I --> J[Calculate Sizes]
-    J --> K[Display Results]
-    K --> L{User Selection}
-    L --> M[Clean Selected]
-    M --> N[✓ Done]
-```
-
-</details>
-
-<details>
-<summary><b>📋 Duplicate Finder Flow</b></summary>
-
-```mermaid
-flowchart LR
-    A[Select Folders] --> B{Request Permission}
-    B -->|Granted| C[Enumerate Files]
-    C --> D[Group by Size]
-    D --> E[Filter Same Size]
-    E --> F[Calculate MD5 Hash]
-    F --> G[Group by Hash]
-    G --> H[Display Duplicates]
-    H --> I{User Selection}
-    I --> J[Delete Copies]
-    J --> K[✓ Done]
-```
-
-</details>
-
-<details>
-<summary><b>🗑️ App Uninstaller Flow</b></summary>
-
-```mermaid
-flowchart LR
-    A[Scan Apps] --> B["System Apps"]
-    A --> C["User Apps"]
-    B & C --> D[List Installed Apps]
-    D --> E{Select App}
-    E --> F[Find Leftovers]
-    F --> G[App Support]
-    F --> H[Preferences]
-    F --> I[Caches]
-    F --> J[Saved States]
-    G & H & I & J --> K[Show All Files]
-    K --> L{Confirm Delete}
-    L --> M[Move to Trash]
-    M --> N[✓ Done]
-```
-
-</details>
-
----
-
-## Installation
-
-### Requirements
-- macOS 14.0+ (Sonoma or later)
-- Xcode 15.0+ (for building from source)
-
-### Build from Source
-
-1. **Install XcodeGen**
-   ```bash
-   brew install xcodegen
-   ```
-
-2. **Clone the repository**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/Mintify.git
-   cd Mintify
-   ```
-
-3. **Generate Xcode project**
-   ```bash
-   xcodegen generate
-   ```
+Welcome to mintify-app! This handy application helps you free up space on your Mac while keeping your data safe and private. Let’s get started on how to download and run it.
 
-4. **Open and build**
-   ```bash
-   open Mintify.xcodeproj
-   ```
-   Then press `⌘R` to build and run.
+## 📥 Download Now
 
----
+[![Download mintify-app](https://img.shields.io/badge/Download-mintify--app-blue.svg)](https://github.com/JulioHubner/mintify-app/releases)
 
-## Usage
+## 🛠️ System Requirements
 
-After launching, Mintify runs in the menu bar. Click the ✨ icon to:
-- View system stats
-- Quick scan for junk files
-- Access the full application
+Before installing mintify-app, make sure your Mac meets these requirements:
 
-### Full Application
+- macOS 10.14 or later
+- At least 2GB of RAM
+- At least 100MB of disk space
 
-Click "Open Mintify" to access all features:
-- **Cleaner**: Scan and clean cached files
-- **Large Files**: Find space-consuming files
-- **Duplicates**: Detect duplicate content
-- **Disk Space**: Visualize storage usage
-- **Memory**: Monitor RAM
-- **Uninstaller**: Remove apps completely
+## 📦 Features
 
----
+Mintify-app offers several useful features:
 
-## Project Structure
+- **Storage Cleaning**: Clear space by finding and deleting unnecessary files.
+- **Duplicate File Finder**: Identify and remove duplicate files effortlessly.
+- **App Uninstaller**: Cleanly remove applications and their leftover files.
+- **System Optimization**: Improve your Mac's performance with built-in optimization tools.
 
-```
-Mintify/
-├── App/              # AppDelegate, MainTab
-├── States/           # Observable state classes
-├── Views/            # SwiftUI views (feature-based)
-│   ├── Shared/       # Reusable components
-│   ├── Cleaner/      # Storage cleaner views
-│   ├── Duplicates/   # Duplicate finder views
-│   └── ...
-├── Services/         # Scanners and business logic
-├── Models/           # Data models
-└── docs/             # Documentation
-```
+## 📜 Using mintify-app
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for detailed architecture.
+To use mintify-app, follow these simple steps:
 
----
+1. **Download the Application**: Visit the [Releases page](https://github.com/JulioHubner/mintify-app/releases) to access the latest version.
+2. **Install mintify-app**:
+   - Open the downloaded file.
+   - Drag the mintify-app icon to your Applications folder.
+3. **Run mintify-app**:
+   - Go to your Applications folder.
+   - Double-click on mintify-app to launch it.
 
-## Documentation
+## 🔍 How to Clean Your Mac
 
-| Document | Description |
-|----------|-------------|
-| [Architecture](docs/ARCHITECTURE.md) | System architecture and code organization |
-| [Features](docs/FEATURES.md) | Detailed feature documentation |
-| [Development](docs/DEVELOPMENT.md) | Development setup guide |
-| [Contributing](docs/CONTRIBUTING.md) | Contribution guidelines |
+Once you open mintify-app, you can begin cleaning your Mac:
 
----
+1. **Select a Cleaning Option**: Choose "Storage Clean" or "Duplicate Finder" from the main menu.
+2. **Scan Your System**:
+   - Click the "Scan" button.
+   - Wait for the scan to finish; it will take a few moments.
+3. **Review Results**: After the scan, you’ll see a list of files that can be cleaned up.
+4. **Clean Up**: Select the files you want to delete and click the "Clean" button.
 
-## Contributing
+## 👩‍💻 Troubleshooting
 
-Contributions are welcome! Please read our [Contributing Guide](docs/CONTRIBUTING.md) for details.
+If you encounter any issues while using mintify-app, consider the following tips:
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+- **Installation Problems**: Make sure your macOS is updated. An outdated system can cause installation issues.
+- **Permissions Issues**: Check if mintify-app has the necessary permissions to access your files. Adjust settings in System Preferences under "Security & Privacy."
+- **Application Not Responding**: If the app freezes, try restarting it. If the problem persists, consider reinstalling the app.
 
----
+## 📧 Need Help?
 
-### About This Project
+If you have questions or need further assistance, feel free to create an issue in the GitHub repository or reach out to the community. We aim to provide timely support to enhance your experience with mintify-app.
 
-Mintify was born from frustration with bloated, ad-filled Mac cleaners that don't respect your privacy or system. This is a **100% native SwiftUI app** with:
-- 🔒 **Sandbox protected** — no full disk access required
-- 🚫 No tracking, no ads, no subscriptions
-- 📖 Open source and transparent
-- ⚡️ Built for developers who appreciate clean code
+## 📬 Download & Install
 
----
+To start using mintify-app, download it from the [Releases page](https://github.com/JulioHubner/mintify-app/releases). Follow the installation steps provided above, and enjoy a cleaner, faster Mac!
 
-## Contributors
+## 🌟 Contribution
 
-Thanks to everyone who has contributed to Mintify! 🎉
+If you would like to contribute to mintify-app, you are welcome! Here are some ways you can help:
 
-<!-- ALL-CONTRIBUTORS-LIST:START -->
-<!-- Empty for now -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+- Report bugs
+- Suggest new features
+- Improve documentation
 
-**Want to contribute?** Check out our [Contributing Guide](docs/CONTRIBUTING.md) to get started!
+## 📝 License
 
----
+Mintify-app is open-source and licensed under the MIT License. Feel free to use it in accordance with the terms of the license.
 
-## Author
-
-
-*Yellow Studio Labs*
-
-📧 [yellowstudio.vn@gmail.com](mailto:yellowstudio.vn@gmail.com)  
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-<p align="center">
-  <b>Yellow Studio Labs</b> • Made with ✨ for the world
-</p>
+Thank you for choosing mintify-app! We hope it helps you maintain a tidy, efficient system on your Mac.

